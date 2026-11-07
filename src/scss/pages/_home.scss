@@ -5,3 +5,102 @@
 // 여러 곳에서 재사용하는 스타일은 components/에 둔다.
 // 섹션이 늘어나면 pages/_<섹션>.scss로 나누고 style.scss에 @use를 추가한다.
 // ------------------------------------------
+
+.c-header {
+  inline-size: min(100%, 375px);
+  margin-block-start: 24px;
+  margin-inline: auto;
+  padding-inline: 24px;
+  justify-content: space-between;
+  align-items: center;
+
+  &::after {
+    content: '';
+    display: block;
+    margin-block-start: 24px;
+    width: calc(100% + 24px * 2);
+    margin-inline: -24px;
+    height: 1px;
+    background-color: $grey-150;
+  }
+
+  &__slideshow-button {
+    font-family: $font-primary;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    color: $grey-400;
+  }
+}
+
+.c-gallery {
+  --columns: 1;
+  --gap: 40px;
+
+  inline-size: min(100%, 310px);
+  margin-block-start: 24px;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  align-items: start;
+  gap: var(--gap);
+
+  &.is-masonry {
+    grid-auto-rows: 1px;
+    row-gap: 0;
+  }
+
+  @media (min-width: 40em) {
+    --columns: 2;
+    inline-size: min(calc(100% - 80px), 1360px);
+  }
+
+  @media (min-width: 64em) {
+    --columns: 4;
+  }
+}
+
+.c-artwork-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto;
+
+  &__thumbnail,
+  &__info {
+    grid-area: 1 / 1 / -1 / -1;
+  }
+
+  &__thumbnail {
+    max-inline-size: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  &__info {
+    --space: 8px;
+
+    color: $bg-white;
+    inline-size: min(100%, 246px);
+    margin-inline: auto;
+    margin-block-end: 32px;
+    text-align: left;
+    align-self: flex-end;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  &__artist {
+    font-family: $font-primary;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+}

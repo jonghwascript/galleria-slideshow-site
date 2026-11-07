@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- displays site properly based on user's device -->
 
     <link
       rel="icon"
@@ -11,30 +10,129 @@
       sizes="32x32"
       href="./images/favicon-32x32.png"
     />
-
-    <title> </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/style.css" />
-    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-    <style>
-      .attribution {
-        font-size: 0.6875rem;
-        text-align: center;
-      }
-
-      .attribution a {
-        color: hsl(228, 45%, 44%);
-      }
-    </style>
+    <title>Frontend Mentor | Galleria slideshow site</title>
   </head>
-
   <body>
-    <footer class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-      Coded by
-      <a href="https://www.frontendmentor.io/profile/jonghwascript"
-        >jonghwascript</a
-      >.
-    </footer>
+    <header class="c-header l-cluster">
+      <div class="c-header__logo">
+        <img src="./images/shared/logo.svg" width="113" height="32" alt="Galleria" />
+      </div>
+      <button class="c-header__slideshow-button">START SLIDESHOW</button>
+    </header>
+    <main id="main" class="c-gallery">
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/starry-night/thumbnail.jpg" width="310" height="237" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Starry Night</h2>
+          <p class="c-artwork-card__artist">Vincent Van Gogh</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/girl-with-pearl-earring/thumbnail.jpg" width="310" height="379" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Girl with a Pearl Earring</h2>
+          <p class="c-artwork-card__artist">Johannes Vermeer</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/guernica/thumbnail.jpg" width="310" height="270" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Guernica</h2>
+          <p class="c-artwork-card__artist">Pablo Picasso</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/penitent-magdalene/thumbnail.jpg" width="310" height="237" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Penitent Magdalene</h2>
+          <p class="c-artwork-card__artist">Artemisia Gentileschi</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-storm-on-the-sea-of-galilee/thumbnail.jpg" width="310" height="322" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Storm on the Sea of Galilee</h2>
+          <p class="c-artwork-card__artist">Rembrandt</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-great-wave-off-kanagawa/thumbnail.jpg" width="310" height="265" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Great Wave off Kanagawa</h2>
+          <p class="c-artwork-card__artist">Hokusai</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/van-gogh-self-portrait/thumbnail.jpg" width="310" height="474" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Van Gogh Self-portrait</h2>
+          <p class="c-artwork-card__artist">Vincent Van Gogh</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-sleeping-gypsy/thumbnail.jpg" width="310" height="237" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Sleeping Gypsy</h2>
+          <p class="c-artwork-card__artist">Henri Rousseau</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/lady-with-an-ermine/thumbnail.jpg" width="310" height="398" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Lady with an Ermine</h2>
+          <p class="c-artwork-card__artist">Leonardo da Vinci</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-night-cafe/thumbnail.jpg" width="310" height="246" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Night Café</h2>
+          <p class="c-artwork-card__artist">Vincent Van Gogh</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-basket-of-apples/thumbnail.jpg" width="310" height="408" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Basket of Apples</h2>
+          <p class="c-artwork-card__artist">Paul Cézanne</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-boy-in-the-red-vest/thumbnail.jpg" width="310" height="246" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Boy in the Red Vest</h2>
+          <p class="c-artwork-card__artist">Paul Cézanne</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/arnolfini-portrait/thumbnail.jpg" width="310" height="313" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Arnolfini Portrait</h2>
+          <p class="c-artwork-card__artist">Jan van Eyck</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/mona-lisa/thumbnail.jpg" width="310" height="498" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">Mona Lisa</h2>
+          <p class="c-artwork-card__artist">Leonardo da Vinci</p>
+        </div>
+      </article>
+      <article class="c-artwork-card">
+        <img class="c-artwork-card__thumbnail" src="./images/the-swing/thumbnail.jpg" width="310" height="322" alt="">
+        <div class="c-artwork-card__info l-stack">
+          <h2 class="c-artwork-card__title">The Swing</h2>
+          <p class="c-artwork-card__artist">Jean-Honoré Fragonard</p>
+        </div>
+      </article>
+    </main>
+    <script src="./js/main.js" defer></script>
   </body>
 </html>

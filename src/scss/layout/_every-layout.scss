@@ -3,3 +3,40 @@
 //
 // CSS adapted for this project from a third-party Gist:
 // https://gist.github.com/Arkweid/18cc3e64c84e1292c2b3a5143bb02a2b
+
+.l-stack {
+  // 1. 모듈러 스케일에 기반한 기본 간격 설정 (언제든 덮어쓸 수 있도록 CSS 변수 사용)
+  --space: 1.5rem;
+
+  // 2. 블록 요소들을 세로로 안전하게 쌓기 위한 모던 규칙
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  // 3. 자식 요소들 사이에 일정한 여백 주입
+  gap: var(--space, 1.5rem);
+}
+
+// 4. 자식 요소들의 기본 세로 여백 '백지화' (충돌 방지 핵심!)
+.l-stack > * {
+  margin-block: 0;
+}
+
+// ==========================================
+// The Cluster (가로 줄바꿈 배치 - 태그, 버튼 그룹 등)
+// ==========================================
+.l-cluster {
+  // 부모(l-stack 등)의 --space가 상속되지 않도록 기본값을 직접 선언
+  --space: 1rem;
+
+  // Flexbox 문맥 설정
+  display: flex;
+  // 자식 요소들이 넘치면 자연스럽게 줄바꿈 허용
+  flex-wrap: wrap;
+  // 간격 설정 (기본 1rem)
+  gap: var(--space, 1rem);
+  // 가로 정렬 방식 선택 (기본값 center)
+  justify-content: center;
+  // 세로 정렬 방식 선택 (기본값 center)
+  align-items: center;
+}
