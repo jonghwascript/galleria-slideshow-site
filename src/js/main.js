@@ -1,4 +1,5 @@
 const gallery = document.querySelector('.c-gallery');
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 if (gallery) {
   loadArtworks();
@@ -47,8 +48,9 @@ async function loadArtworks() {
       document.fonts.ready,
     ]);
     status.remove();
-    initializeMasonry();
+    const revealCards = initializeMasonry();
     gallery.classList.remove('is-loading');
+    revealCards();
   } catch (error) {
     gallery.classList.remove('is-masonry', 'is-loading');
     status.textContent = 'Unable to load artworks. Please refresh the page to try again.';
@@ -61,6 +63,8 @@ async function loadArtworks() {
 
 function initializeMasonry() {
   const cards = [...gallery.querySelectorAll('.c-artwork-card')];
+  const animations = new Map();
+  let previousRects = [];
   let frame;
   let resizeTimer;
   let resizing = false;
@@ -69,7 +73,24 @@ function initializeMasonry() {
   let previousColumnCount = 0;
   let previousMeasurements = '';
 
+  function getRect(card) {
+    const rect = card.getBoundingClientRect();
+    return { left: rect.left + window.scrollX, top: rect.top + window.scrollY };
+  }
+
+  function animateCard(card, keyframes, duration) {
+    const animation = card.animate(keyframes, {
+      duration,
+      easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+    });
+    animations.set(card, animation);
+    animation.onfinish = () => {
+      if (animations.get(card) === animation) animations.delete(card);
+    };
+  }
+
   function layoutMasonry(rebalance = false) {
+    const firstRects = cards.map((card, index) => animations.has(card) ? getRect(card) : previousRects[index]);
     const styles = getComputedStyle(gallery);
     const columnCount = parseInt(styles.getPropertyValue('--columns'), 10);
     const columnsChanged = columnCount !== previousColumnCount;
@@ -87,10 +108,13 @@ function initializeMasonry() {
     const items = cards.map((card, index) => ({
       card,
       index,
-      span: Math.ceil((card.getBoundingClientRect().height + gap) / rowHeight),
+      span: Math.ceil((parseFloat(getComputedStyle(card).height) + gap) / rowHeight),
     }));
     const measurements = `${columnCount}/${rowHeight}/${gap}/${items.map(item => item.span).join(',')}`;
-    if (measurements === previousMeasurements && !(rebalance && balancePending)) return;
+    if (measurements === previousMeasurements && !(rebalance && balancePending)) {
+      if (animations.size === 0) previousRects = cards.map(getRect);
+      return;
+    }
     previousMeasurements = measurements;
     previousColumnCount = columnCount;
 
@@ -105,14 +129,32 @@ function initializeMasonry() {
       balancePending = true;
     }
 
+    animations.forEach(animation => animation.cancel());
+    animations.clear();
+
     columns.forEach((column, index) => {
       let row = 1;
-      column.items.sort((a, b) => a.index - b.index).forEach(item => {
+      column.items.forEach(item => {
         item.card.style.gridColumn = `${index + 1}`;
         item.card.style.gridRow = `${row} / span ${item.span}`;
         row += item.span;
       });
     });
+
+    previousRects = cards.map(getRect);
+    if (!motionPreference.matches) {
+      cards.forEach((card, index) => {
+        const first = firstRects[index];
+        if (!first) return;
+        const dx = first.left - previousRects[index].left;
+        const dy = first.top - previousRects[index].top;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+        animateCard(card, [
+          { transform: `translate(${dx}px, ${dy}px)` },
+          { transform: 'translate(0, 0)' },
+        ], 450);
+      });
+    }
   }
 
   function balanceColumns(items, columnCount) {
@@ -148,6 +190,7 @@ function initializeMasonry() {
       }
     }
 
+    columns.forEach(column => column.items.sort((a, b) => a.index - b.index));
     return columns;
   }
 
@@ -178,4 +221,17 @@ function initializeMasonry() {
       frame = requestAnimationFrame(() => layoutMasonry(true));
     }, 150);
   });
+
+  motionPreference.addEventListener('change', () => {
+    if (motionPreference.matches) {
+      animations.forEach(animation => animation.cancel());
+      animations.clear();
+    }
+  });
+
+  return () => {
+    if (!motionPreference.matches) {
+      cards.forEach(card => animateCard(card, [{ opacity: 0 }, { opacity: 1 }], 300));
+    }
+  };
 }

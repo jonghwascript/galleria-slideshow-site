@@ -55,6 +55,7 @@
   &.is-masonry {
     grid-auto-rows: 1px;
     row-gap: 0;
+    overflow: clip;
   }
 
   &.is-loading .c-artwork-card {
