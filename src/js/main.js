@@ -1,25 +1,121 @@
 const gallery = document.querySelector('.c-gallery');
 
 if (gallery) {
-  const cards = [...gallery.querySelectorAll('.c-artwork-card')];
-  let frame;
+  loadArtworks();
+}
 
-  function layoutMasonry() {
-    // 이전 열 위치를 지워 분기점 변경 시 암시적 열이 생기지 않도록 한다.
-    cards.forEach(card => {
-      card.style.gridColumn = '';
-      card.style.gridRow = '';
+async function loadArtworks() {
+  const status = gallery.querySelector('[role="status"]');
+  const template = document.querySelector('#artwork-card-template');
+  gallery.setAttribute('aria-busy', 'true');
+  status.textContent = 'Loading artworks…';
+
+  try {
+    const response = await fetch('./data.json');
+    if (!response.ok) throw new Error(`Artwork request failed: ${response.status}`);
+    const artworks = await response.json();
+    if (!Array.isArray(artworks)) throw new Error('Expected an artwork list');
+
+    const fragment = document.createDocumentFragment();
+    artworks.forEach(artwork => {
+      if (
+        typeof artwork?.name !== 'string' ||
+        typeof artwork?.artist?.name !== 'string' ||
+        typeof artwork?.images?.thumbnail !== 'string' ||
+        !Number.isFinite(artwork?.images?.thumbnailHeight) ||
+        artwork.images.thumbnailHeight <= 0
+      ) {
+        throw new Error('Invalid artwork data');
+      }
+      const card = template.content.cloneNode(true);
+      card.querySelector('.c-artwork-card').style.setProperty('--thumbnail-height', `${artwork.images.thumbnailHeight}px`);
+      card.querySelector('.c-artwork-card__thumbnail').src = artwork.images.thumbnail;
+      card.querySelector('.c-artwork-card__title').textContent = artwork.name;
+      card.querySelector('.c-artwork-card__artist').textContent = artwork.artist.name;
+      fragment.append(card);
     });
 
+    if (artworks.length === 0) {
+      status.textContent = 'No artworks are available.';
+      return;
+    }
+
+    gallery.classList.add('is-loading');
+    gallery.replaceChildren(status, fragment);
+    await Promise.all([
+      ...[...gallery.querySelectorAll('img')].map(image => image.decode().catch(() => {})),
+      document.fonts.ready,
+    ]);
+    status.remove();
+    initializeMasonry();
+    gallery.classList.remove('is-loading');
+  } catch (error) {
+    gallery.classList.remove('is-masonry', 'is-loading');
+    status.textContent = 'Unable to load artworks. Please refresh the page to try again.';
+    gallery.replaceChildren(status);
+    console.error('Unable to load gallery:', error);
+  } finally {
+    gallery.setAttribute('aria-busy', 'false');
+  }
+}
+
+function initializeMasonry() {
+  const cards = [...gallery.querySelectorAll('.c-artwork-card')];
+  let frame;
+  let resizeTimer;
+  let resizing = false;
+  let columns = [];
+  let balancePending = false;
+  let previousColumnCount = 0;
+  let previousMeasurements = '';
+
+  function layoutMasonry(rebalance = false) {
     const styles = getComputedStyle(gallery);
+    const columnCount = parseInt(styles.getPropertyValue('--columns'), 10);
+    const columnsChanged = columnCount !== previousColumnCount;
+
+    // 이전 열 위치를 지워 분기점 변경 시 암시적 열이 생기지 않도록 한다.
+    if (columnsChanged) {
+      cards.forEach(card => {
+        card.style.gridColumn = '';
+        card.style.gridRow = '';
+      });
+    }
+
     const rowHeight = parseFloat(styles.gridAutoRows);
     const gap = parseFloat(styles.columnGap);
-    const columnCount = parseInt(styles.getPropertyValue('--columns'), 10);
     const items = cards.map((card, index) => ({
       card,
       index,
       span: Math.ceil((card.getBoundingClientRect().height + gap) / rowHeight),
     }));
+    const measurements = `${columnCount}/${rowHeight}/${gap}/${items.map(item => item.span).join(',')}`;
+    if (measurements === previousMeasurements && !(rebalance && balancePending)) return;
+    previousMeasurements = measurements;
+    previousColumnCount = columnCount;
+
+    if (columnsChanged || rebalance || !resizing) {
+      columns = balanceColumns(items, columnCount);
+      balancePending = false;
+    } else {
+      // 같은 열 수로 리사이즈하는 동안에는 열 배정을 유지한다.
+      columns.forEach(column => {
+        column.items = column.items.map(item => items[item.index]);
+      });
+      balancePending = true;
+    }
+
+    columns.forEach((column, index) => {
+      let row = 1;
+      column.items.sort((a, b) => a.index - b.index).forEach(item => {
+        item.card.style.gridColumn = `${index + 1}`;
+        item.card.style.gridRow = `${row} / span ${item.span}`;
+        row += item.span;
+      });
+    });
+  }
+
+  function balanceColumns(items, columnCount) {
     const columns = Array.from({ length: columnCount }, () => ({ items: [], height: 0 }));
 
     // 높은 카드부터 가장 짧은 열에 배분한다. 1열에서는 원래 순서를 유지한다.
@@ -52,31 +148,34 @@ if (gallery) {
       }
     }
 
-    columns.forEach((column, index) => {
-      let row = 1;
-      column.items.sort((a, b) => a.index - b.index).forEach(item => {
-        item.card.style.gridColumn = `${index + 1}`;
-        item.card.style.gridRow = `${row} / span ${item.span}`;
-        row += item.span;
-      });
-    });
+    return columns;
   }
 
   function scheduleLayout() {
     cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(layoutMasonry);
+    frame = requestAnimationFrame(() => layoutMasonry());
   }
 
   gallery.classList.add('is-masonry');
 
-  // 이미지, 글꼴, 화면 폭 변화로 카드 높이가 바뀌면 다시 배치한다.
+  // 첫 배치는 숨겨진 상태에서 동기적으로 완료한다.
+  layoutMasonry();
+
+  // 카드 크기가 실제로 달라졌을 때만 다시 배치한다.
   const observer = new ResizeObserver(scheduleLayout);
   cards.forEach(card => observer.observe(card));
   gallery.querySelectorAll('img').forEach(image => {
     image.addEventListener('load', scheduleLayout);
     image.addEventListener('error', scheduleLayout);
   });
-  window.addEventListener('resize', scheduleLayout);
-  document.fonts.ready.then(scheduleLayout);
-  scheduleLayout();
+  window.addEventListener('resize', () => {
+    resizing = true;
+    clearTimeout(resizeTimer);
+    scheduleLayout();
+    resizeTimer = setTimeout(() => {
+      resizing = false;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => layoutMasonry(true));
+    }, 150);
+  });
 }

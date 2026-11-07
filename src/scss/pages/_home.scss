@@ -47,9 +47,18 @@
   align-items: start;
   gap: var(--gap);
 
+  &__status,
+  > noscript {
+    grid-column: 1 / -1;
+  }
+
   &.is-masonry {
     grid-auto-rows: 1px;
     row-gap: 0;
+  }
+
+  &.is-loading .c-artwork-card {
+    visibility: hidden;
   }
 
   @media (min-width: 40em) {
@@ -58,6 +67,10 @@
   }
 
   @media (min-width: 64em) {
+    --columns: 3;
+  }
+
+  @media (min-width: 90em) {
     --columns: 4;
   }
 }
@@ -75,8 +88,8 @@
   &__thumbnail {
     max-inline-size: 100%;
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: var(--thumbnail-height);
+    object-fit: cover;
   }
 
   &__info {

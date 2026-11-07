@@ -10,6 +10,7 @@
     },
     "images": {
       "thumbnail": "./images/starry-night/thumbnail.jpg",
+      "thumbnailHeight": 250,
       "hero": {
         "small": "./images/starry-night/hero-small.jpg",
         "large": "./images/starry-night/hero-large.jpg"
@@ -28,6 +29,7 @@
     },
     "images": {
       "thumbnail": "./images/girl-with-pearl-earring/thumbnail.jpg",
+      "thumbnailHeight": 400,
       "hero": {
         "small": "./images/girl-with-pearl-earring/hero-small.jpg",
         "large": "./images/girl-with-pearl-earring/hero-large.jpg"
@@ -46,6 +48,7 @@
     },
     "images": {
       "thumbnail": "./images/guernica/thumbnail.jpg",
+      "thumbnailHeight": 285,
       "hero": {
         "small": "./images/guernica/hero-small.jpg",
         "large": "./images/guernica/hero-large.jpg"
@@ -64,6 +67,7 @@
     },
     "images": {
       "thumbnail": "./images/penitent-magdalene/thumbnail.jpg",
+      "thumbnailHeight": 250,
       "hero": {
         "small": "./images/penitent-magdalene/hero-small.jpg",
         "large": "./images/penitent-magdalene/hero-large.jpg"
@@ -82,6 +86,7 @@
     },
     "images": {
       "thumbnail": "./images/the-storm-on-the-sea-of-galilee/thumbnail.jpg",
+      "thumbnailHeight": 340,
       "hero": {
         "small": "./images/the-storm-on-the-sea-of-galilee/hero-small.jpg",
         "large": "./images/the-storm-on-the-sea-of-galilee/hero-large.jpg"
@@ -100,6 +105,7 @@
     },
     "images": {
       "thumbnail": "./images/the-great-wave-off-kanagawa/thumbnail.jpg",
+      "thumbnailHeight": 280,
       "hero": {
         "small": "./images/the-great-wave-off-kanagawa/hero-small.jpg",
         "large": "./images/the-great-wave-off-kanagawa/hero-large.jpg"
@@ -118,6 +124,7 @@
     },
     "images": {
       "thumbnail": "./images/van-gogh-self-portrait/thumbnail.jpg",
+      "thumbnailHeight": 500,
       "hero": {
         "small": "./images/van-gogh-self-portrait/hero-small.jpg",
         "large": "./images/van-gogh-self-portrait/hero-large.jpg"
@@ -136,6 +143,7 @@
     },
     "images": {
       "thumbnail": "./images/the-sleeping-gypsy/thumbnail.jpg",
+      "thumbnailHeight": 250,
       "hero": {
         "small": "./images/the-sleeping-gypsy/hero-small.jpg",
         "large": "./images/the-sleeping-gypsy/hero-large.jpg"
@@ -154,6 +162,7 @@
     },
     "images": {
       "thumbnail": "./images/lady-with-an-ermine/thumbnail.jpg",
+      "thumbnailHeight": 420,
       "hero": {
         "small": "./images/lady-with-an-ermine/hero-small.jpg",
         "large": "./images/lady-with-an-ermine/hero-large.jpg"
@@ -172,6 +181,7 @@
     },
     "images": {
       "thumbnail": "./images/the-night-cafe/thumbnail.jpg",
+      "thumbnailHeight": 260,
       "hero": {
         "small": "./images/the-night-cafe/hero-small.jpg",
         "large": "./images/the-night-cafe/hero-large.jpg"
@@ -190,6 +200,7 @@
     },
     "images": {
       "thumbnail": "./images/the-basket-of-apples/thumbnail.jpg",
+      "thumbnailHeight": 430,
       "hero": {
         "small": "./images/the-basket-of-apples/hero-small.jpg",
         "large": "./images/the-basket-of-apples/hero-large.jpg"
@@ -208,6 +219,7 @@
     },
     "images": {
       "thumbnail": "./images/the-boy-in-the-red-vest/thumbnail.jpg",
+      "thumbnailHeight": 260,
       "hero": {
         "small": "./images/the-boy-in-the-red-vest/hero-small.jpg",
         "large": "./images/the-boy-in-the-red-vest/hero-large.jpg"
@@ -226,6 +238,7 @@
     },
     "images": {
       "thumbnail": "./images/arnolfini-portrait/thumbnail.jpg",
+      "thumbnailHeight": 330,
       "hero": {
         "small": "./images/arnolfini-portrait/hero-small.jpg",
         "large": "./images/arnolfini-portrait/hero-large.jpg"
@@ -244,6 +257,7 @@
     },
     "images": {
       "thumbnail": "./images/mona-lisa/thumbnail.jpg",
+      "thumbnailHeight": 525,
       "hero": {
         "small": "./images/mona-lisa/hero-small.jpg",
         "large": "./images/mona-lisa/hero-large.jpg"
@@ -262,6 +276,7 @@
     },
     "images": {
       "thumbnail": "./images/the-swing/thumbnail.jpg",
+      "thumbnailHeight": 340,
       "hero": {
         "small": "./images/the-swing/hero-small.jpg",
         "large": "./images/the-swing/hero-large.jpg"

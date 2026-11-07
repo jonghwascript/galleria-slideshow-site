@@ -48,6 +48,12 @@ function staticTask() {
     .pipe(gulp.dest(DIST_DIR));
 }
 
+function dataTask() {
+  return gulp
+    .src('src/pages/data.json', { encoding: false })
+    .pipe(gulp.dest(DIST_DIR));
+}
+
 async function prettierTask() {
   const { default: prettier } = await import('gulp-prettier');
   return gulp
@@ -62,7 +68,7 @@ async function prettierTask() {
 
 const buildTask = gulp.series(
   cleanTask,
-  gulp.parallel(scssTask, htmlTask, staticTask),
+  gulp.parallel(scssTask, htmlTask, staticTask, dataTask),
 );
 
 function serveTask(done) {
@@ -88,12 +94,14 @@ function watchTask() {
   gulp.watch('src/scss/**/*.scss', scssTask);
   gulp.watch(['src/pages/**/*.html', 'src/partials/**/*.html'], htmlTask);
   gulp.watch(STATIC_FILES, staticTask);
+  gulp.watch('src/pages/data.json', dataTask);
 }
 
 exports.clean = cleanTask;
 exports.scss = scssTask;
 exports.html = htmlTask;
 exports.static = staticTask;
+exports.data = dataTask;
 exports.prettier = prettierTask;
 exports.build = buildTask;
 exports.default = gulp.series(buildTask, serveTask, watchTask);
