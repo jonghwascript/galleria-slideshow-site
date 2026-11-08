@@ -8,6 +8,7 @@ if (gallery) {
 async function loadArtworks() {
   const status = gallery.querySelector('[role="status"]');
   const template = document.querySelector('#artwork-card-template');
+  const heading = gallery.querySelector('h1');
   gallery.setAttribute('aria-busy', 'true');
   status.textContent = 'Loading artworks…';
 
@@ -42,7 +43,7 @@ async function loadArtworks() {
     }
 
     gallery.classList.add('is-loading');
-    gallery.replaceChildren(status, fragment);
+    gallery.replaceChildren(heading, status, fragment);
     await Promise.all([
       ...[...gallery.querySelectorAll('img')].map(image => image.decode().catch(() => {})),
       document.fonts.ready,
@@ -54,7 +55,7 @@ async function loadArtworks() {
   } catch (error) {
     gallery.classList.remove('is-masonry', 'is-loading');
     status.textContent = 'Unable to load artworks. Please refresh the page to try again.';
-    gallery.replaceChildren(status);
+    gallery.replaceChildren(heading, status);
     console.error('Unable to load gallery:', error);
   } finally {
     gallery.setAttribute('aria-busy', 'false');
