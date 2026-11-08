@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Starry Night | Galleria</title>
+  </head>
+  <body>
+    <header class="c-header l-cluster">
+      <div class="c-header__logo">
+        <img
+          src="./images/shared/logo.svg"
+          width="113"
+          height="32"
+          alt="Galleria"
+        />
+      </div>
+      <button class="c-header__slideshow-button">START SLIDESHOW</button>
+    </header>
+    <main id="main" class="c-detail">
+      <div class="c-detail__overview">
+        <div class="c-detail__image">
+          <button class="c-detail__view l-cluster">
+            <img src="./images/shared/icon-view-image.svg" alt="" />
+            <span>VIEW IMAGE</span>
+          </button>
+          <picture>
+            <img
+              src="./images/starry-night/hero-small.jpg"
+              width="327"
+              height="280"
+              alt="Starry Night by Vincent Van Gogh"
+            />
+          </picture>
+        </div>
+        <div class="c-detail__description">
+          <div class="l-stack">
+            <h1 class="c-detail__name">Starry Night</h1>
+            <p class="c-detail__artist-name">Vincent Van Gogh</p>
+          </div>
+          <picture class="c-detail__picture">
+            <img
+              class="c-detail_artist-thumbnail"
+              src="./images/starry-night/artist.jpg"
+              alt=""
+            />
+          </picture>
+        </div>
+      </div>
+      <div class="c-detail__additional">
+        <p class="c-detail__year">1889</p>
+        <div class="c-detail__wrapper l-stack">
+          <p class="c-detail__text">
+            Although The Starry Night was painted during the day in Van Gogh's
+            ground-floor studio, it would be inaccurate to state that the
+            picture was painted from memory. The view has been identified as the
+            one from his bedroom window, facing east, a view which Van Gogh
+            painted variations of no fewer than twenty-one times, including The
+            Starry Night. "Through the iron-barred window," he wrote to his
+            brother, Theo, around 23 May 1889, "I can see an enclosed square of
+            wheat ... above which, in the morning, I watch the sun rise in all
+            its glory."
+          </p>
+          <a class="c-detail__link" href="https://en.wikipedia.org/wiki/The_Starry_Night"
+            >Go to source</a
+          >
+        </div>
+      </div>
+    </main>
+    <footer class="c-footer">
+      <progress class="c-footer__progress" value="1" max="15"></progress>
+      <div class="c-footer__inner l-cluster">
+        <div class="c-footer__info">
+          <p class="c-footer__title">Starry Night</p>
+          <p class="c-footer__artist">Vincent Van Gogh</p>
+        </div>
+        <nav class="c-footer__navigation l-cluster" aria-label="Artwork navigation">
+          <a
+            class="c-footer__link c-footer__link--previous"
+            role="link"
+            aria-label="Previous artwork"
+            aria-disabled="true"
+          >
+            <img class="c-footer__icon" src="./images/shared/icon-back-button.svg" alt="" />
+          </a>
+          <a
+            class="c-footer__link c-footer__link--next"
+            href="./girl-with-pearl-earring.html"
+            aria-label="Next artwork: Girl with a Pearl Earring"
+          >
+            <img class="c-footer__icon" src="./images/shared/icon-next-button.svg" alt="" />
+          </a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
