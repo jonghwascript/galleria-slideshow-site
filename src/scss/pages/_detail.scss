@@ -140,7 +140,10 @@
 .c-detail__additional {
   margin-block-start: -15px;
   width: 100%;
-  min-height: 507px;
+
+  @include mq('tablet'){
+    margin-block-start: 64px;
+  }
 }
 
 .c-detail__year {
@@ -153,6 +156,10 @@
   text-align: right;
   position: relative;
   z-index: 1;
+
+  @include mq('tablet'){
+    text-align: left;
+  }
 }
 
 .c-detail__wrapper {
@@ -160,6 +167,12 @@
   z-index: 10;
   margin-block-start: -36px;
   --space: 64px;
+
+  @include mq('tablet'){
+    margin-block-start: calc(-74px + -64px);
+    max-inline-size: 457px;
+    margin-inline: auto;
+  }
 }
 
 .c-detail__text {
@@ -184,6 +197,10 @@
 
 .c-footer {
   margin-block-start: 77px;
+
+  @include mq('tablet'){
+    margin-block-start: 56px;
+  }
 }
 
 .c-footer__progress {
