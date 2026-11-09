@@ -1,0 +1,248 @@
+@use '../abstracts' as *;
+
+//--------------------------------------------
+//Page Detail
+//--------------------------------------------
+.c-detail {
+  // inline-size: min(100%, 327px);
+  inline-size: 100%;
+  margin-block-start: 24px;
+  padding-inline: 24px;
+
+  @include mq('tablet'){
+    padding-inline: 40px;
+  }
+}
+
+.c-detail__overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: calc((100vw - 48px) * 0.85627) calc(
+      (100vw - 48px) * 0.34251
+    );
+
+  @include mq('tablet') {
+    grid-template-columns: minmax(0, 475px) minmax(0, 1fr);
+    grid-template-rows: auto;
+    column-gap: 10px;
+  }
+}
+
+.c-detail__image {
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
+  align-self: start;
+
+  @include mq('tablet') {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+}
+
+.c-detail__view {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  --space: 14px;
+  padding-inline: 16px;
+  padding-block: 14px;
+  background-color: $bg-black;
+  align-items: center;
+
+  @include mq('tablet') {
+    top: auto;
+    bottom: 16px;
+  }
+
+  > span {
+    font-family: $font-primary;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $bg-white;
+  }
+}
+
+.c-detail__hero {
+  inline-size: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.c-detail__description {
+  position: relative;
+  width: 86.24%;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
+  align-self: end;
+  background-color: $bg-white;
+
+  @include mq('tablet') {
+    width: 445px;
+    height: 236px;
+    padding-inline-start: 64px;
+    align-self: start;
+    justify-self: end;
+    grid-column: 2 / 3;
+    grid-row: 1 / -1;
+  }
+
+  > .l-stack {
+    --space: 8px;
+    padding: 24px;
+
+    @include mq('tablet') {
+      padding: 0;
+    }
+  }
+}
+
+.c-detail__name {
+  font-family: $font-primary;
+  font-size: clamp(1.5rem, calc(-0.408rem + 8.142vw), 3.5rem); //24px ~ 56px
+  font-weight: 700;
+  line-height: 1.25;
+
+  @include mq('tablet') {
+    > span{
+      display: block;
+    }
+  }
+}
+
+.c-detail__artist-name {
+  font-family: $font-primary;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: $grey-400;
+}
+
+.c-detail__picture{
+
+}
+
+.c-detail__artist-thumbnail {
+  left: 16px;
+  width: clamp(4rem, calc(0.183rem + 16.285vw), 8rem);
+  height: auto;
+  aspect-ratio: 1 / 1;
+
+  @include mq('tablet') {
+    position: absolute;
+    top : 100%;
+    left: 260px;
+  }
+}
+
+.c-detail__additional {
+  margin-block-start: -15px;
+  width: 100%;
+  min-height: 507px;
+}
+
+.c-detail__year {
+  font-family: $font-primary;
+  font-size: clamp(6.25rem, calc(0.286rem + 25.445vw), 12.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  color: $grey-100;
+  text-align: right;
+  position: relative;
+  z-index: 1;
+}
+
+.c-detail__wrapper {
+  position: relative;
+  z-index: 10;
+  margin-block-start: -36px;
+  --space: 64px;
+}
+
+.c-detail__text {
+  font-family: $font-primary;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2;
+  letter-spacing: 0;
+  color: $grey-400;
+}
+
+.c-detail__link {
+  text-decoration: none;
+  font-family: $font-primary;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $grey-400;
+}
+
+.c-footer {
+  margin-block-start: 77px;
+}
+
+.c-footer__progress {
+  width: 100%;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  padding: 0;
+
+  // Firefox의 트랙
+  background: var(--color-grey-200);
+
+  // Chrome·Safari의 트랙
+  &::-webkit-progress-bar {
+    background: var(--color-grey-200);
+  }
+
+  // Chrome·Safari의 진행 막대
+  &::-webkit-progress-value {
+    background: var(--color-black);
+  }
+
+  // Firefox의 진행 막대
+  &::-moz-progress-bar {
+    background: var(--color-black);
+  }
+
+  background-color: $grey-150;
+}
+
+.c-footer__inner {
+  padding: 16px 24px;
+  justify-content: space-between;
+}
+
+.c-footer__title {
+  font-family: $font-primary;
+  font-size: clamp(0.875rem, calc(0.636rem + 1.018vw), 1.125rem);
+  font-weight: 700;
+  line-height: 2;
+  letter-spacing: -0.25px;
+}
+
+.c-footer__artist {
+  font-family: $font-primary;
+  font-size: clamp(0.625rem, calc(0.446rem + 0.763vw), 0.813rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.c-footer__navigation {
+  --space: 24px;
+}
+
+.c-footer__icon {
+  width: clamp(1rem, calc(0.463rem + 2.29vw), 1.563rem);
+  height: auto;
+  aspect-ratio: 1 / 1;
+}

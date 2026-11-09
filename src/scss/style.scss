@@ -8,5 +8,6 @@
 @use 'components/skip-link';
 
 @use 'pages/home';
+@use 'pages/detail';
 
 @use 'utilities/utilities'; // 같은 명시도에서 다른 규칙을 이기도록 마지막에

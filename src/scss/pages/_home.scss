@@ -7,7 +7,8 @@
 // ------------------------------------------
 
 .c-header {
-  inline-size: min(100%, 375px);
+  inline-size: 100%;
+  max-inline-size: 1360px;
   margin-block-start: 24px;
   margin-inline: auto;
   padding-inline: 24px;
@@ -31,6 +32,10 @@
     line-height: 1.25;
     letter-spacing: 2px;
     color: $grey-400;
+
+    @include mq('tablet'){
+      font-size: 12px;
+    }
   }
 }
 
@@ -117,196 +122,4 @@
     font-weight: 400;
     line-height: 1.25;
   }
-}
-
-//--------------------------------------------
-//Page Detail
-//--------------------------------------------
-.c-detail {
-  inline-size: min(100%, 310px);
-  margin-block-start: 24px;
-  margin-inline: auto;
-}
-
-.c-detail__overview {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 280px 112px;
-}
-
-.c-detail__image {
-  position: relative;
-  grid-column: 1 / -1;
-  grid-row: 1 / 2;
-  align-self: start;
-}
-
-.c-detail__view {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  --space: 14px;
-  padding-inline: 16px;
-  padding-block: 14px;
-  background-color: $bg-black;
-  align-items: center;
-
-  > span {
-    font-family: $font-primary;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $bg-white;
-  }
-}
-
-.c-detail__view {
-  position: absolute;
-}
-
-.c-detail__description {
-  position: relative;
-  width: min(100%, 282px);
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
-  align-self: end;
-  background-color: $bg-white;
-
-  > .l-stack {
-    --space: 8px;
-    padding: 24px;
-  }
-}
-
-.c-detail__name {
-  font-family: $font-primary;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.c-detail__artist-name {
-  font-family: $font-primary;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.25;
-  color: $grey-400;
-}
-
-.c-detail__picture {
-}
-
-.c-detail_artist-thumbnail {
-  margin-inline-start: 16px;
-  width: 64px;
-  height: auto;
-  aspect-ratio: 1 / 1;
-}
-
-.c-detail__additional {
-  margin-block-start: -15px;
-  width: 100%;
-  min-height: 507px;
-}
-
-.c-detail__year {
-  font-family: $font-primary;
-  font-size: 100px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
-  color: $grey-100;
-  text-align: right;
-}
-
-.c-detail__wrapper {
-  margin-block-start: -36px;
-  --space: 64px;
-}
-
-.c-detail__text {
-  font-family: $font-primary;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 2;
-  letter-spacing: 0;
-  color: $grey-400;
-}
-
-.c-detail__link {
-  text-decoration: none;
-  font-family: $font-primary;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: $grey-400;
-}
-
-.c-footer {
-  margin-block-start: 77px;
-}
-
-.c-footer__progress {
-  width: 100%;
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 1px;
-  border: 0;
-  padding: 0;
-
-  // Firefox의 트랙
-  background: var(--color-grey-200);
-
-  // Chrome·Safari의 트랙
-  &::-webkit-progress-bar {
-    background: var(--color-grey-200);
-  }
-
-  // Chrome·Safari의 진행 막대
-  &::-webkit-progress-value {
-    background: var(--color-black);
-  }
-
-  // Firefox의 진행 막대
-  &::-moz-progress-bar {
-    background: var(--color-black);
-  }
-
-  background-color: $grey-150;
-}
-
-.c-footer__inner {
-  padding: 16px 24px;
-  justify-content: space-between;
-}
-
-.c-footer__title {
-  font-family: $font-primary;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 2;
-  letter-spacing: -0.25px;
-}
-
-.c-footer__artist {
-  font-family: $font-primary;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: 0;
-}
-
-.c-footer__navigation{
-  --space: 24px;
-}
-
-.c-footer__icon{
-  width: 16px;
-  height: auto;
-  aspect-ratio: 1 / 1;
 }

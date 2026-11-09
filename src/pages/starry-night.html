@@ -38,8 +38,13 @@
             <img src="./images/shared/icon-view-image.svg" alt="" />
             <span>VIEW IMAGE</span>
           </button>
-          <picture>
+          <picture class="c-detail__picture">
+            <source
+              media="(min-width: 768px)"
+              srcset="./images/starry-night/hero-large.jpg"
+            />
             <img
+              class="c-detail__hero"
               src="./images/starry-night/hero-small.jpg"
               width="327"
               height="280"
@@ -49,12 +54,12 @@
         </div>
         <div class="c-detail__description">
           <div class="l-stack">
-            <h1 class="c-detail__name">Starry Night</h1>
+            <h1 class="c-detail__name"><span>Starry</span> <span>Night</span></h1>
             <p class="c-detail__artist-name">Vincent Van Gogh</p>
           </div>
           <picture class="c-detail__picture">
             <img
-              class="c-detail_artist-thumbnail"
+              class="c-detail__artist-thumbnail"
               src="./images/starry-night/artist.jpg"
               alt=""
             />
