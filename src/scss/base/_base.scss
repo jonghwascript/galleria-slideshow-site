@@ -15,7 +15,6 @@
   --s-1: calc(var(--s0) / var(--ratio)); // 0.66rem
   --s-2: calc(var(--s-1) / var(--ratio)); // 0.44rem
 
-  // 색상·테두리 토큰 (l-box, l-reel 등 레이아웃이 공유)
   --color-light: #ffffff;
   --color-dark: #1e293b;
   --border-thin: 1px;
