@@ -4,17 +4,27 @@
 //Page Detail
 //--------------------------------------------
 .c-detail {
-  // inline-size: min(100%, 327px);
   inline-size: 100%;
   margin-block-start: 24px;
   padding-inline: 24px;
 
-  @include mq('tablet'){
+  @include mq('tablet') {
+    max-inline-size: 900px;
+    margin-inline: auto;
     padding-inline: 40px;
+  }
+
+  @include mq('desktop') {
+    max-inline-size: 1306px;
+    display: grid;
+    grid-template-columns: minmax(0, min(62.35%, 848px)) minmax(0, 1fr);
+    grid-template-rows: 624px;
+    grid-template-areas: 'gallery additional';
   }
 }
 
 .c-detail__overview {
+  container-type: inline-size;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: calc((100vw - 48px) * 0.85627) calc(
@@ -24,7 +34,11 @@
   @include mq('tablet') {
     grid-template-columns: minmax(0, 475px) minmax(0, 1fr);
     grid-template-rows: auto;
-    column-gap: 10px;
+  }
+
+  @include mq('desktop') {
+    grid-area: gallery;
+    grid-template-columns: minmax(0, min(56%, 475px)) minmax(0, 1fr);
   }
 }
 
@@ -80,13 +94,19 @@
   background-color: $bg-white;
 
   @include mq('tablet') {
-    width: 445px;
+    width: 435px;
     height: 236px;
+    margin-inline-start: -242px;
     padding-inline-start: 64px;
     align-self: start;
-    justify-self: end;
+    justify-self: start;
     grid-column: 2 / 3;
     grid-row: 1 / -1;
+  }
+
+  @include mq('desktop') {
+    width: 52.48cqi;
+    margin-inline-start: -72px;
   }
 
   > .l-stack {
@@ -106,7 +126,7 @@
   line-height: 1.25;
 
   @include mq('tablet') {
-    > span{
+    > span {
       display: block;
     }
   }
@@ -120,8 +140,10 @@
   color: $grey-400;
 }
 
-.c-detail__picture{
-
+.c-detail__picture {
+  @include mq('desktop') {
+    display: block;
+  }
 }
 
 .c-detail__artist-thumbnail {
@@ -132,8 +154,14 @@
 
   @include mq('tablet') {
     position: absolute;
-    top : 100%;
+    top: 100%;
     left: 260px;
+  }
+
+  @include mq('desktop') {
+    position: static;
+    margin-block-start: 324px;
+    margin-inline-start: calc(96px - 64px);
   }
 }
 
@@ -141,8 +169,14 @@
   margin-block-start: -15px;
   width: 100%;
 
-  @include mq('tablet'){
+  @include mq('tablet') {
     margin-block-start: 64px;
+  }
+
+  @include mq('desktop') {
+    margin-block-start: 0;
+    grid-area: additional;
+    container-type: inline-size;
   }
 }
 
@@ -157,8 +191,12 @@
   position: relative;
   z-index: 1;
 
-  @include mq('tablet'){
+  @include mq('tablet') {
     text-align: left;
+  }
+
+  @include mq('desktop') {
+    font-size: min(12.5rem, 44cqi);
   }
 }
 
@@ -168,10 +206,17 @@
   margin-block-start: -36px;
   --space: 64px;
 
-  @include mq('tablet'){
-    margin-block-start: calc(-74px + -64px);
+  @include mq('tablet') {
+
     max-inline-size: 457px;
     margin-inline: auto;
+  }
+
+  @include mq('desktop') {
+    --space: 96px;
+    margin-block-start: calc(-110px);
+    max-inline-size: 350px;
+    margin-inline: 0;
   }
 }
 
@@ -198,7 +243,7 @@
 .c-footer {
   margin-block-start: 77px;
 
-  @include mq('tablet'){
+  @include mq('tablet') {
     margin-block-start: 56px;
   }
 }
