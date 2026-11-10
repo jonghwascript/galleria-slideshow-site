@@ -18,6 +18,7 @@
     max-inline-size: 1360px;
     padding-inline: 0;
     display: grid;
+    column-gap: 36px;
     grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
     grid-template-rows: 624px;
     grid-template-areas: 'gallery additional';
@@ -28,30 +29,34 @@
   container-type: inline-size;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: calc((100vw - 48px) * 0.85627) calc(
-      (100vw - 48px) * 0.34251
-    );
+  grid-template-rows: 232px 48px 112px;
 
   @include mq('tablet') {
-    grid-template-columns: minmax(0, 475px) minmax(0, 1fr);
-    grid-template-rows: auto;
+    grid-template-columns: 243px 232px 213px;
+    grid-template-rows: 236px 128px auto;
   }
 
   @include mq('desktop') {
     grid-area: gallery;
-    grid-template-columns: minmax(0, min(56%, 475px)) minmax(0, 1fr);
+    grid-template-columns: 403px 72px 373px;
+    grid-template-rows: auto;
   }
 }
 
 .c-detail__image {
   position: relative;
   grid-column: 1 / -1;
-  grid-row: 1 / 2;
+  grid-row: 1 / 3;
   align-self: start;
 
   @include mq('tablet') {
-    grid-column: 1 / 2;
-    grid-row: 1 / -1;
+    grid-column: 1 / 3;
+    grid-row: 1 / 4;
+  }
+
+  @include mq('desktop') {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
   }
 }
 
@@ -82,34 +87,36 @@
 }
 
 .c-detail__hero {
-  inline-size: 100%;
+  max-inline-size: 100%;
   height: auto;
   object-fit: cover;
+  @include mq('tablet') {
+    width: 100%;
+  }
 }
+
 .c-detail__description {
   position: relative;
-  width: 86.24%;
+  width: 282px;
   grid-column: 1 / -1;
-  grid-row: 2 / 3;
-  align-self: end;
+  grid-row: 2 / 4;
+  align-self: start;
   background-color: $bg-white;
 
   @include mq('tablet') {
-    width: 435px;
+    grid-column: 2 / 4;
+    grid-row: 1 / 2;
     height: 236px;
-    margin-inline-start: -242px;
     padding-inline-start: 64px;
     align-self: start;
     justify-self: start;
-    grid-column: 2 / 3;
-    grid-row: 1 / -1;
   }
 
   @include mq('desktop') {
-    width: 52.48cqi;
-    height: auto;
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+    width: 100%;
     padding-bottom: 64px;
-    margin-inline-start: -72px;
   }
 
   > .l-stack {
@@ -149,21 +156,40 @@
   }
 }
 
+.c-detail__thumbnail {
+  grid-column: 1 / -1;
+  grid-row: 3 / 4;
+  align-self: start;
+
+  @include mq('tablet') {
+    position: relative;
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    justify-self: end;
+  }
+
+  @include mq('desktop') {
+    grid-column: 2 / 4;
+    grid-row: 1 / 2;
+    align-self: end;
+    justify-self: start;
+  }
+}
+
 .c-detail__artist-thumbnail {
-  left: 16px;
+  margin-left: 16px;
   width: clamp(4rem, calc(0.183rem + 16.285vw), 8rem);
   height: auto;
   aspect-ratio: 1 / 1;
 
   @include mq('tablet') {
-    position: absolute;
-    top: 100%;
-    left: 260px;
+    margin-left: 0;
+    margin-right: 57px;
   }
 
   @include mq('desktop') {
-    top: 496px;
-    left: 96px;
+    margin-left: 96px;
+    margin-right: 0;
   }
 }
 
