@@ -22,9 +22,16 @@
   <body>
     <header class="c-header l-cluster">
       <div class="c-header__logo">
-        <img src="./images/shared/logo.svg" width="113" height="32" alt="Galleria" />
+        <img
+          src="./images/shared/logo.svg"
+          width="113"
+          height="32"
+          alt="Galleria"
+        />
       </div>
-      <button class="c-header__slideshow-button">START SLIDESHOW</button>
+      <button class="c-header__slideshow-button" type="button">
+        START SLIDESHOW
+      </button>
     </header>
     <main id="main" class="c-gallery">
       <h1 class="u-sr-only">Art gallery</h1>
@@ -33,9 +40,11 @@
     </main>
     <template id="artwork-card-template">
       <article class="c-artwork-card">
-        <img class="c-artwork-card__thumbnail" alt="">
+        <img class="c-artwork-card__thumbnail" alt="" />
         <div class="c-artwork-card__info l-stack">
-          <h2 class="c-artwork-card__title"></h2>
+          <h2 class="c-artwork-card__title">
+            <a class="c-artwork-card__link"></a>
+          </h2>
           <p class="c-artwork-card__artist"></p>
         </div>
       </article>

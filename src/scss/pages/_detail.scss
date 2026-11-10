@@ -15,9 +15,10 @@
   }
 
   @include mq('desktop') {
-    max-inline-size: 1306px;
+    max-inline-size: 1360px;
+    padding-inline: 0;
     display: grid;
-    grid-template-columns: minmax(0, min(62.35%, 848px)) minmax(0, 1fr);
+    grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
     grid-template-rows: 624px;
     grid-template-areas: 'gallery additional';
   }
@@ -106,6 +107,8 @@
 
   @include mq('desktop') {
     width: 52.48cqi;
+    height: auto;
+    padding-bottom: 64px;
     margin-inline-start: -72px;
   }
 
@@ -159,9 +162,8 @@
   }
 
   @include mq('desktop') {
-    position: static;
-    margin-block-start: 324px;
-    margin-inline-start: calc(96px - 64px);
+    top: 496px;
+    left: 96px;
   }
 }
 
@@ -207,7 +209,6 @@
   --space: 64px;
 
   @include mq('tablet') {
-
     max-inline-size: 457px;
     margin-inline: auto;
   }
@@ -249,7 +250,6 @@
 }
 
 .c-footer__progress {
-  width: 100%;
   appearance: none;
   display: block;
   width: 100%;
@@ -258,24 +258,22 @@
   padding: 0;
 
   // Firefox의 트랙
-  background: var(--color-grey-200);
+  background-color: $grey-150;
 
   // Chrome·Safari의 트랙
   &::-webkit-progress-bar {
-    background: var(--color-grey-200);
+    background-color: $grey-150;
   }
 
   // Chrome·Safari의 진행 막대
   &::-webkit-progress-value {
-    background: var(--color-black);
+    background-color: $bg-black;
   }
 
   // Firefox의 진행 막대
   &::-moz-progress-bar {
-    background: var(--color-black);
+    background-color: $bg-black;
   }
-
-  background-color: $grey-150;
 }
 
 .c-footer__inner {
