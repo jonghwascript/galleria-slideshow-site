@@ -1,3 +1,5 @@
+import { fetchArtworks } from './artworks.js';
+
 const gallery = document.querySelector('.c-gallery');
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -13,27 +15,10 @@ async function loadArtworks() {
   status.textContent = 'Loading artworks…';
 
   try {
-    const response = await fetch('./data.json');
-    if (!response.ok)
-      throw new Error(`Artwork request failed: ${response.status}`);
-    const artworks = await response.json();
-    if (!Array.isArray(artworks)) throw new Error('Expected an artwork list');
-
-    const artworkSlug = (artwork) => artwork.slug;
+    const artworks = await fetchArtworks();
 
     const fragment = document.createDocumentFragment();
     artworks.forEach((artwork) => {
-      if (
-        typeof artwork?.name !== 'string' ||
-        typeof artwork?.artist?.name !== 'string' ||
-        typeof artwork?.images?.thumbnail !== 'string' ||
-        !Number.isFinite(artwork?.images?.thumbnailHeight) ||
-        artwork.images.thumbnailHeight <= 0 ||
-        typeof artworkSlug(artwork) !== 'string' ||
-        !/^[a-z0-9-]+$/.test(artworkSlug(artwork))
-      ) {
-        throw new Error('Invalid artwork data');
-      }
       const card = template.content.cloneNode(true);
       card
         .querySelector('.c-artwork-card')
@@ -45,7 +30,7 @@ async function loadArtworks() {
         artwork.images.thumbnail;
       const link = card.querySelector('.c-artwork-card__link');
       link.textContent = artwork.name;
-      link.href = `./detail.html?artwork=${encodeURIComponent(artworkSlug(artwork))}&play=1`;
+      link.href = `./detail.html?artwork=${encodeURIComponent(artwork.slug)}&play=1`;
       card.querySelector('.c-artwork-card__artist').textContent =
         artwork.artist.name;
       fragment.append(card);
@@ -59,7 +44,7 @@ async function loadArtworks() {
     document
       .querySelector('.c-header__slideshow-button')
       .addEventListener('click', () => {
-        location.href = `./detail.html?artwork=${encodeURIComponent(artworkSlug(artworks[0]))}&play=1`;
+        location.href = `./detail.html?artwork=${encodeURIComponent(artworks[0].slug)}&play=1`;
       });
 
     gallery.classList.add('is-loading');

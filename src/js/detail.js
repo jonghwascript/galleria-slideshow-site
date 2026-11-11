@@ -1,3 +1,5 @@
+import { fetchArtworks } from './artworks.js';
+
 const detail = document.querySelector('.c-detail');
 const slideshowButton = document.querySelector('.c-header__slideshow-button');
 const previousButton = document.querySelector('.c-footer__link--previous');
@@ -10,13 +12,9 @@ let artworks = [];
 let currentIndex = 0;
 let slideshowTimer;
 
-function artworkSlug(artwork) {
-  return artwork.slug;
-}
-
 function artworkUrl(index, playing = false) {
   const url = new URL('./detail.html', location.href);
-  url.searchParams.set('artwork', artworkSlug(artworks[index]));
+  url.searchParams.set('artwork', artworks[index].slug);
   if (playing) url.searchParams.set('play', '1');
   return url;
 }
@@ -110,36 +108,12 @@ function showUnavailable(message) {
 
 async function loadDetail() {
   try {
-    const response = await fetch('./data.json');
-    if (!response.ok)
-      throw new Error(`Artwork request failed: ${response.status}`);
-    artworks = await response.json();
-    if (
-      !Array.isArray(artworks) ||
-      artworks.length === 0 ||
-      artworks.some(
-        (artwork) =>
-          typeof artworkSlug(artwork) !== 'string' ||
-          !/^[a-z0-9-]+$/.test(artworkSlug(artwork)) ||
-          !Array.isArray(artwork.titleLines) ||
-          artwork.titleLines.length === 0 ||
-          artwork.titleLines.some(
-            (line) => typeof line !== 'string' || !line.trim(),
-          ) ||
-          artwork.titleLines.join(' ').toLocaleLowerCase('en') !==
-            artwork.name.toLocaleLowerCase('en'),
-      ) ||
-      new Set(artworks.map(artworkSlug)).size !== artworks.length
-    ) {
-      throw new Error('Invalid artwork data');
-    }
+    artworks = await fetchArtworks();
+    if (artworks.length === 0) throw new Error('No artworks are available');
 
     const slug =
-      new URLSearchParams(location.search).get('artwork') ??
-      artworkSlug(artworks[0]);
-    const index = artworks.findIndex(
-      (artwork) => artworkSlug(artwork) === slug,
-    );
+      new URLSearchParams(location.search).get('artwork') ?? artworks[0].slug;
+    const index = artworks.findIndex((artwork) => artwork.slug === slug);
     if (index < 0) {
       showUnavailable('Artwork not found. Return to the gallery.');
       return;
@@ -175,7 +149,7 @@ closeDialogButton.addEventListener('click', () => imageDialog.close());
 window.addEventListener('popstate', () => {
   if (slideshowTimer) stopSlideshow(false);
   const slug = new URLSearchParams(location.search).get('artwork');
-  const index = artworks.findIndex((artwork) => artworkSlug(artwork) === slug);
+  const index = artworks.findIndex((artwork) => artwork.slug === slug);
   if (index >= 0) renderArtwork(index);
 });
 
