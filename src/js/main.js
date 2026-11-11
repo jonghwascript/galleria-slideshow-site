@@ -45,7 +45,7 @@ async function loadArtworks() {
         artwork.images.thumbnail;
       const link = card.querySelector('.c-artwork-card__link');
       link.textContent = artwork.name;
-      link.href = `./detail.html?artwork=${encodeURIComponent(artworkSlug(artwork))}`;
+      link.href = `./detail.html?artwork=${encodeURIComponent(artworkSlug(artwork))}&play=1`;
       card.querySelector('.c-artwork-card__artist').textContent =
         artwork.artist.name;
       fragment.append(card);
@@ -163,14 +163,33 @@ function initializeMasonry() {
     animations.forEach((animation) => animation.cancel());
     animations.clear();
 
+    const visualOrder = [];
     columns.forEach((column, index) => {
       let row = 1;
       column.items.forEach((item) => {
         item.card.style.gridColumn = `${index + 1}`;
         item.card.style.gridRow = `${row} / span ${item.span}`;
+        visualOrder.push({ card: item.card, row, column: index });
         row += item.span;
       });
     });
+
+    const visualCards = visualOrder
+      .sort((a, b) => a.row - b.row || a.column - b.column)
+      .map(({ card }) => card);
+    const currentCards = [...gallery.querySelectorAll('.c-artwork-card')];
+    if (
+      visualCards.some((card, index) => card !== currentCards[index])
+    ) {
+      const focusedElement = cards.find((card) =>
+        card.contains(document.activeElement),
+      )
+        ? document.activeElement
+        : null;
+      gallery.append(...visualCards);
+      if (focusedElement && document.activeElement !== focusedElement)
+        focusedElement.focus({ preventScroll: true });
+    }
 
     previousRects = cards.map(getRect);
     if (!motionPreference.matches) {

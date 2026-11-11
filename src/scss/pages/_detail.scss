@@ -330,10 +330,38 @@
   --space: 24px;
 }
 
+.c-footer__link {
+  color: $bg-black;
+
+  &:disabled {
+    color: #a8a8a8;
+    cursor: default;
+  }
+
+  &--previous .c-footer__icon {
+    mask-image: url('../images/shared/icon-back-button.svg');
+    -webkit-mask-image: url('../images/shared/icon-back-button.svg');
+  }
+
+  &--next .c-footer__icon {
+    mask-image: url('../images/shared/icon-next-button.svg');
+    -webkit-mask-image: url('../images/shared/icon-next-button.svg');
+  }
+}
+
 .c-footer__icon {
+  display: block;
+  flex: none;
   width: clamp(1rem, calc(0.463rem + 2.29vw), 1.563rem);
   height: auto;
   aspect-ratio: 1 / 1;
+  background-color: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 
 

@@ -75,11 +75,16 @@ function stopSlideshow(updateUrl = true) {
 }
 
 function startSlideshow() {
-  if (currentIndex === artworks.length - 1) renderArtwork(0, true);
+  let restartAfterLastArtwork = currentIndex === artworks.length - 1;
   slideshowButton.textContent = 'STOP SLIDESHOW';
   history.replaceState(null, '', artworkUrl(currentIndex, true));
   slideshowTimer = setInterval(() => {
     if (currentIndex === artworks.length - 1) {
+      if (restartAfterLastArtwork) {
+        restartAfterLastArtwork = false;
+        renderArtwork(0, true);
+        return;
+      }
       stopSlideshow();
       return;
     }
