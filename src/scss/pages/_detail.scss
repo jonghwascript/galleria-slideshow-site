@@ -78,6 +78,11 @@
   padding-inline: 16px;
   background-color: $black;
 
+  // hover 값은 시안 확인 전 임시 값
+  &:hover {
+    background-color: $hover-white;
+  }
+
   @include mq('tablet') {
     top: auto;
     bottom: 16px;
@@ -259,6 +264,11 @@
   color: $grey-400;
   text-decoration: none;
   text-transform: uppercase;
+
+  // hover 값은 시안 확인 전 임시 값
+  &:hover {
+    color: $black;
+  }
 }
 
 // ------------------------------------------
@@ -329,6 +339,11 @@
 
 .c-footer__link {
   color: $black;
+
+  // hover 값은 시안 확인 전 임시 값. 비활성 버튼은 누를 수 없으므로 제외한다.
+  &:hover:not(:disabled) {
+    opacity: 0.5;
+  }
 
   &:disabled {
     color: $grey-disabled;
@@ -404,6 +419,11 @@ html:has(.c-dialog[open]) {
   @include font-style(0.875rem, 700, 2); // 14px
   color: $white;
   text-align: right;
+
+  // hover 값은 시안 확인 전 임시 값
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 .c-dialog__image {

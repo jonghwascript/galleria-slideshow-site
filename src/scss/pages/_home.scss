@@ -28,9 +28,21 @@
     background-color: $grey-150;
   }
 
+  &__logo {
+    // hover 값은 시안 확인 전 임시 값
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
   &__slideshow-button {
     @include label-text(0.5625rem); // 9px
     color: $grey-400;
+
+    // hover 값은 시안 확인 전 임시 값
+    &:hover {
+      color: $black;
+    }
 
     @include mq('tablet') {
       font-size: 0.75rem; // 12px
