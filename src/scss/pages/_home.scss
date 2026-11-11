@@ -7,61 +7,51 @@
 // ------------------------------------------
 
 // 관계: 로고와 재생 버튼은 가용 공간을 나누고, 구분선은 다음 행에서 좌우 패딩까지 확장된다.
-// 제한: 헤더는 최대 1360px이며 좌우에 24px 패딩을 둔다.
+// 제한: 헤더는 최대 $page-max-width이며 좌우에 $space-gutter 패딩을 둔다.
 // 전환: 공간이 부족하면 l-cluster의 항목이 다음 행으로 넘어갈 수 있다.
 .c-header {
-  inline-size: 100%;
-  max-inline-size: 1360px;
-  margin-block-start: 24px;
-  margin-inline: auto;
-  padding-inline: 24px;
   justify-content: space-between;
   align-items: center;
+  inline-size: 100%;
+  max-inline-size: $page-max-width;
+  margin-block-start: 24px;
+  margin-inline: auto;
+  padding-inline: $space-gutter;
 
   &::after {
     content: '';
     display: block;
-    margin-block-start: 24px;
-    width: calc(100% + 24px * 2);
-    margin-inline: -24px;
+    width: calc(100% + 2 * #{$space-gutter});
     height: 1px;
+    margin-block-start: 24px;
+    margin-inline: calc(-1 * #{$space-gutter});
     background-color: $grey-150;
   }
 
   &__slideshow-button {
-    font-family: $font-primary;
-    font-size: 9px;
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: 2px;
+    @include label-text(0.5625rem); // 9px
     color: $grey-400;
 
     @include mq('tablet') {
-      font-size: 12px;
+      font-size: 0.75rem; // 12px
     }
   }
 }
 
 // 관계: 열 수는 --columns로 정하고, 서로 다른 카드 높이는 스크립트가 지정한 행 범위로 배치한다.
-// 제한: 모바일 너비는 최대 310px, 넓은 화면은 좌우 40px을 남기며 최대 1360px이다.
-// 전환: 40em·64em·90em부터 각각 2열·3열·4열로 늘어난다.
+// 제한: 모바일 너비는 최대 310px, 넓은 화면은 좌우 40px을 남기며 최대 $page-max-width이다.
+// 전환: small-tablet·desktop·large-desktop부터 각각 2열·3열·4열로 늘어난다.
 .c-gallery {
   --columns: 1;
   --gap: 40px;
-
-  inline-size: min(100%, 310px);
-  margin-block-start: 24px;
-  margin-inline: auto;
 
   display: grid;
   grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
   align-items: start;
   gap: var(--gap);
-
-  &__status,
-  > noscript {
-    grid-column: 1 / -1;
-  }
+  inline-size: min(100%, 310px);
+  margin-block-start: 24px;
+  margin-inline: auto;
 
   &.is-masonry {
     grid-auto-rows: 1px;
@@ -73,17 +63,22 @@
     visibility: hidden;
   }
 
-  @media (min-width: 40em) {
+  @include mq('small-tablet') {
     --columns: 2;
-    inline-size: min(calc(100% - 80px), 1360px);
+    inline-size: min(calc(100% - 80px), $page-max-width);
   }
 
-  @media (min-width: 64em) {
+  @include mq('desktop') {
     --columns: 3;
   }
 
-  @media (min-width: 90em) {
+  @include mq('large-desktop') {
     --columns: 4;
+  }
+
+  &__status,
+  &__noscript {
+    grid-column: 1 / -1;
   }
 }
 
@@ -97,10 +92,15 @@
 
   &::before {
     content: '';
-    grid-area: 1 / 1 / -1 / -1;
     z-index: 1;
-    background: linear-gradient(0deg, #000 0%, transparent 84%);
+    grid-area: 1 / 1 / -1 / -1;
+    background: linear-gradient(0deg, $black 0%, transparent 84%);
     pointer-events: none;
+  }
+
+  &:hover &__thumbnail,
+  &:focus-within &__thumbnail {
+    filter: brightness(1.5);
   }
 
   &__thumbnail,
@@ -109,43 +109,30 @@
   }
 
   &__thumbnail {
-    max-inline-size: 100%;
     width: 100%;
     height: var(--thumbnail-height);
     object-fit: cover;
-
     transition: filter 0.3s ease;
-  }
-
-  &:hover &__thumbnail,
-  &:focus-within &__thumbnail {
-    filter: brightness(1.5);
   }
 
   &__info {
     --space: 8px;
 
     z-index: 2;
-    color: $bg-white;
+    align-self: flex-end;
     inline-size: min(100%, 246px);
     margin-inline: auto;
     margin-block-end: 32px;
+    color: $white;
     text-align: left;
-    align-self: flex-end;
   }
 
   &__title {
-    font-family: $font-primary;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.25;
+    @include font-style(1.5rem, 700, 1.25); // 24px
   }
 
   &__artist {
-    font-family: $font-primary;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.25;
+    @include font-style(0.8125rem, 400, 1.25); // 13px
   }
 
   &__link {

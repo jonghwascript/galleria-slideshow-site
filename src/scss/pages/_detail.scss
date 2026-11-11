@@ -1,15 +1,16 @@
 @use '../abstracts' as *;
 
-//--------------------------------------------
-//Page Detail
-//--------------------------------------------
+// ------------------------------------------
+// 상세 페이지
+// ------------------------------------------
+
 // 관계: 데스크톱에서는 작품 영역과 설명 영역을 두 열에 놓고, 그 전에는 문서 흐름대로 쌓는다.
-// 제한: 데스크톱 최대 너비는 1360px, 작품 열은 최대 848px이며 첫 행은 624px이다.
+// 제한: 데스크톱 최대 너비는 $page-max-width, 작품 열은 최대 848px이며 첫 행은 624px이다.
 // 전환: 태블릿부터 좌우 패딩과 최대 너비가 바뀌고, 데스크톱부터 두 열 Grid가 된다.
 .c-detail {
   inline-size: 100%;
   margin-block-start: 24px;
-  padding-inline: 24px;
+  padding-inline: $space-gutter;
 
   @include mq('tablet') {
     max-inline-size: 900px;
@@ -18,13 +19,13 @@
   }
 
   @include mq('desktop') {
-    max-inline-size: 1360px;
-    padding-inline: 0;
     display: grid;
-    column-gap: 36px;
     grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
     grid-template-rows: 624px;
     grid-template-areas: 'gallery additional';
+    column-gap: 36px;
+    max-inline-size: $page-max-width;
+    padding-inline: 0;
   }
 }
 
@@ -61,7 +62,6 @@
   }
 
   @include mq('desktop') {
-    grid-column: 1 / 3;
     grid-row: 1 / 2;
   }
 }
@@ -69,68 +69,55 @@
 // 관계: 보기 버튼은 위치 기준인 이미지 영역의 왼쪽에서 16px 떨어져 놓인다.
 // 전환: 모바일에서는 위쪽, 태블릿부터는 아래쪽을 기준으로 놓인다.
 .c-detail__view {
+  --space: 14px;
   position: absolute;
   top: 16px;
   left: 16px;
-  --space: 14px;
-  padding-inline: 16px;
-  padding-block: 14px;
-  background-color: $bg-black;
   align-items: center;
+  padding-block: 14px;
+  padding-inline: 16px;
+  background-color: $black;
 
   @include mq('tablet') {
     top: auto;
     bottom: 16px;
   }
+}
 
-  > span {
-    font-family: $font-primary;
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $bg-white;
-  }
+.c-detail__view-label {
+  @include label-text(0.625rem, 1.2); // 10px
+  color: $white;
+  text-transform: uppercase;
+}
+
+// 이미지를 블록으로 두어 화면 크기와 관계없이 같은 상자 모델로 배치한다.
+.c-detail__picture {
+  display: block;
 }
 
 .c-detail__hero {
   width: 100%;
-  max-inline-size: 100%;
   height: auto;
   object-fit: cover;
-  @include mq('tablet') {
-    width: 100%;
-  }
 }
 
 // 관계: 모바일 설명은 이미지와 둘째 행을 겹쳐 쓰고, 태블릿부터 이미지의 둘째 열에서 오른쪽으로 확장된다.
 // 제한: 모바일 너비는 작품 영역의 86%이며, 태블릿부터 내부 좌측 여백을 둔다.
-// 전환: 태블릿과 데스크톱에서 차지하는 열 범위가 달라진다.
 .c-detail__description {
   position: relative;
-  width: 86%;
   grid-column: 1 / -1;
   grid-row: 2 / 3;
   align-self: start;
-  background-color: $bg-white;
+  width: 86%;
+  background-color: $white;
 
   @include mq('tablet') {
-    margin-block-end: 0;
     grid-column: 2 / 4;
     grid-row: 1 / 2;
+    justify-self: start;
     width: 100%;
     padding-inline-start: 64px;
     padding-block-end: 64px;
-    align-self: start;
-    justify-self: start;
-  }
-
-  @include mq('desktop') {
-    grid-column: 2 / -1;
-    grid-row: 1 / 2;
-    width: 100%;
-    padding-bottom: 64px;
   }
 
   > .l-stack {
@@ -144,30 +131,23 @@
 }
 
 .c-detail__name {
-  font-family: $font-primary;
-  font-size: clamp(1.5rem, calc(-0.408rem + 8.142vw), 3.5rem); //24px ~ 56px
-  font-weight: 700;
-  line-height: 1.25;
+  @include font-style(
+    clamp(1.5rem, calc(-0.408rem + 8.142vw), 3.5rem),
+    700,
+    1.25
+  ); // 24px ~ 56px
+}
 
+// 태블릿부터 제목을 data.json의 titleLines 단위로 줄바꿈한다.
+.c-detail__name-line {
   @include mq('tablet') {
-    > span {
-      display: block;
-    }
+    display: block;
   }
 }
 
 .c-detail__artist-name {
-  font-family: $font-primary;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.25;
+  @include font-style(0.9375rem, 400, 1.25); // 15px
   color: $grey-400;
-}
-
-.c-detail__picture {
-  @include mq('desktop') {
-    display: block;
-  }
 }
 
 // 관계: 작가 사진은 모바일에서 제목 아래 행에, 데스크톱에서는 작품 영역의 아래쪽에 놓인다.
@@ -193,49 +173,50 @@
 }
 
 .c-detail__artist-thumbnail {
-  margin-left: 16px;
   width: clamp(4rem, calc(0.183rem + 16.285vw), 8rem);
   height: auto;
   aspect-ratio: 1 / 1;
+  margin-left: 16px;
 
   @include mq('tablet') {
-    margin-left: 0;
     margin-right: 57px;
+    margin-left: 0;
   }
 
   @include mq('desktop') {
-    margin-left: 96px;
     margin-right: 0;
+    margin-left: 96px;
   }
 }
 
 .c-detail__additional {
-  margin-block-start: -15px;
   width: 100%;
+  margin-block-start: -15px;
 
   @include mq('tablet') {
     margin-block-start: 64px;
   }
 
   @include mq('desktop') {
-    margin-block-start: 0;
-    grid-area: additional;
     container-type: inline-size;
+    grid-area: additional;
+    margin-block-start: 0;
   }
 }
 
 // 관계: 연도와 본문은 겹치며, 본문의 더 높은 쌓임 순서가 연도 위에 놓인다.
 // 전환: 데스크톱에서는 설명 컨테이너 너비의 44cqi와 12.5rem 중 작은 크기를 쓴다.
 .c-detail__year {
-  font-family: $font-primary;
-  font-size: clamp(6.25rem, calc(0.286rem + 25.445vw), 12.5rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
-  color: $grey-100;
-  text-align: right;
   position: relative;
   z-index: 1;
+  @include font-style(
+    clamp(6.25rem, calc(0.286rem + 25.445vw), 12.5rem),
+    700,
+    1
+  ); // 100px ~ 200px
+  color: $grey-100;
+  letter-spacing: 0;
+  text-align: right;
 
   @include mq('tablet') {
     text-align: left;
@@ -249,10 +230,10 @@
 // 제한: 본문 너비는 태블릿에서 최대 457px, 데스크톱에서 최대 350px이다.
 // 전환: 데스크톱에서는 위쪽 음수 여백과 자식 간 간격이 커진다.
 .c-detail__wrapper {
+  --space: 64px;
   position: relative;
   z-index: 10;
   margin-block-start: -36px;
-  --space: 64px;
 
   @include mq('tablet') {
     max-inline-size: 457px;
@@ -261,31 +242,28 @@
 
   @include mq('desktop') {
     --space: 96px;
-    margin-block-start: calc(-110px);
     max-inline-size: 350px;
+    margin-block-start: -110px;
     margin-inline: 0;
   }
 }
 
 .c-detail__text {
-  font-family: $font-primary;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 2;
-  letter-spacing: 0;
+  @include font-style(0.875rem, 700, 2); // 14px
   color: $grey-400;
+  letter-spacing: 0;
 }
 
 .c-detail__link {
-  text-decoration: none;
-  font-family: $font-primary;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  @include label-text(0.5625rem); // 9px
   color: $grey-400;
+  text-decoration: none;
+  text-transform: uppercase;
 }
+
+// ------------------------------------------
+// 푸터
+// ------------------------------------------
 
 .c-footer {
   margin-block-start: 77px;
@@ -300,8 +278,8 @@
   display: block;
   width: 100%;
   height: 1px;
-  border: 0;
   padding: 0;
+  border: 0;
 
   // Firefox의 트랙
   background-color: $grey-150;
@@ -313,33 +291,35 @@
 
   // Chrome·Safari의 진행 막대
   &::-webkit-progress-value {
-    background-color: $bg-black;
+    background-color: $black;
   }
 
   // Firefox의 진행 막대
   &::-moz-progress-bar {
-    background-color: $bg-black;
+    background-color: $black;
   }
 }
 
 .c-footer__inner {
-  padding: 16px 24px;
   justify-content: space-between;
+  padding: 16px $space-gutter;
 }
 
 .c-footer__title {
-  font-family: $font-primary;
-  font-size: clamp(0.875rem, calc(0.636rem + 1.018vw), 1.125rem);
-  font-weight: 700;
-  line-height: 2;
+  @include font-style(
+    clamp(0.875rem, calc(0.636rem + 1.018vw), 1.125rem),
+    700,
+    2
+  ); // 14px ~ 18px
   letter-spacing: -0.25px;
 }
 
 .c-footer__artist {
-  font-family: $font-primary;
-  font-size: clamp(0.625rem, calc(0.446rem + 0.763vw), 0.813rem);
-  font-weight: 400;
-  line-height: 1.2;
+  @include font-style(
+    clamp(0.625rem, calc(0.446rem + 0.763vw), 0.813rem),
+    400,
+    1.2
+  ); // 10px ~ 13px
   letter-spacing: 0;
 }
 
@@ -348,10 +328,10 @@
 }
 
 .c-footer__link {
-  color: $bg-black;
+  color: $black;
 
   &:disabled {
-    color: #a8a8a8;
+    color: $grey-disabled;
     cursor: default;
   }
 
@@ -366,6 +346,7 @@
   }
 }
 
+// 아이콘 SVG를 mask로 써서 버튼의 currentColor(활성·비활성 색)를 그대로 따른다.
 .c-footer__icon {
   display: block;
   flex: none;
@@ -381,11 +362,9 @@
   -webkit-mask-size: contain;
 }
 
-
-
-//--------------------------------------------
-// Modal
-//--------------------------------------------
+// ------------------------------------------
+// 모달
+// ------------------------------------------
 
 // 열린 모달이 있을 때 문서 스크롤을 잠그고, 닫히면 기본 스크롤로 돌아간다.
 html:has(.c-dialog[open]) {
@@ -398,15 +377,15 @@ html:has(.c-dialog[open]) {
 .c-dialog {
   --space: 24px;
   width: max-content;
-  max-inline-size: min(327px, 100% - 2rem);
   min-height: 315px;
+  max-inline-size: min(327px, 100% - 2rem);
   margin: auto;
   padding: 0;
   border: 0;
   background-color: transparent;
 
   &::backdrop {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: $overlay-black;
   }
 
   @include mq('tablet') {
@@ -421,13 +400,10 @@ html:has(.c-dialog[open]) {
 .c-dialog__close {
   display: block;
   width: 100%;
-  text-align: right;
-  font-family: $font-primary;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 2;
-  color: $bg-white;
   padding-block: 2px;
+  @include font-style(0.875rem, 700, 2); // 14px
+  color: $white;
+  text-align: right;
 }
 
 .c-dialog__image {

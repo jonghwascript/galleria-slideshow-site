@@ -37,6 +37,7 @@ function renderArtwork(index, updateHistory = false) {
   title.replaceChildren(
     ...artwork.titleLines.flatMap((line, lineIndex) => {
       const span = document.createElement('span');
+      span.className = 'c-detail__name-line';
       span.textContent = line;
       return lineIndex ? [document.createTextNode(' '), span] : [span];
     }),

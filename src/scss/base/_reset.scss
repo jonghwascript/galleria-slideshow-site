@@ -1,6 +1,6 @@
-// ==========================================
+// ------------------------------------------
 // 브라우저 기본 스타일 초기화
-// ==========================================
+// ------------------------------------------
 
 // 모든 요소의 테두리와 패딩을 크기 계산에 포함
 *,
@@ -24,7 +24,6 @@ video {
 
 ul,
 ol {
-  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -32,7 +31,6 @@ ol {
 fieldset {
   // 자식이 길어져도 부모 밖으로 넘치지 않도록 자동 최소 크기를 없앤다
   min-width: 0;
-  margin: 0;
   padding: 0;
   border: none;
 }
@@ -48,11 +46,9 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
   padding: 0;
   border: none;
   background: none;
-  background-color: transparent;
   cursor: pointer;
   box-shadow: none;
 }
