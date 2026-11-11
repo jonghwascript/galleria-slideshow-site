@@ -97,6 +97,13 @@
     width: 100%;
     height: var(--thumbnail-height);
     object-fit: cover;
+
+    transition: filter 0.3s ease;
+  }
+
+  &:hover &__thumbnail,
+  &:focus-within &__thumbnail {
+    filter: brightness(1.5);
   }
 
   &__info {
