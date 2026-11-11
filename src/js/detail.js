@@ -93,6 +93,21 @@ function startSlideshow() {
   }, 5000);
 }
 
+// 작품을 보여 줄 수 없을 때 본문을 안내 문구로 바꾸고, 더는 쓸 수 없는 컨트롤을 정리한다.
+// artworks를 비워 두면 남아 있는 이벤트 핸들러도 아무 동작을 하지 않는다.
+function showUnavailable(message) {
+  clearInterval(slideshowTimer);
+  slideshowTimer = undefined;
+  artworks = [];
+  detail.replaceChildren(document.createTextNode(message));
+  slideshowButton.textContent = 'START SLIDESHOW';
+  slideshowButton.disabled = true;
+  previousButton.disabled = true;
+  nextButton.disabled = true;
+  // 푸터는 HTML 기본 작품 정보와 진행 막대만 담고 있어 오류 상태에서는 숨긴다.
+  document.querySelector('.c-footer').hidden = true;
+}
+
 async function loadDetail() {
   try {
     const response = await fetch('./data.json');
@@ -126,9 +141,7 @@ async function loadDetail() {
       (artwork) => artworkSlug(artwork) === slug,
     );
     if (index < 0) {
-      detail.replaceChildren(
-        document.createTextNode('Artwork not found. Return to the gallery.'),
-      );
+      showUnavailable('Artwork not found. Return to the gallery.');
       return;
     }
 
@@ -138,10 +151,8 @@ async function loadDetail() {
       startSlideshow();
     else slideshowButton.textContent = 'START SLIDESHOW';
   } catch (error) {
-    detail.replaceChildren(
-      document.createTextNode(
-        'Unable to load artwork. Please refresh the page to try again.',
-      ),
+    showUnavailable(
+      'Unable to load artwork. Please refresh the page to try again.',
     );
     console.error('Unable to load artwork:', error);
   }

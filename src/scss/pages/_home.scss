@@ -39,9 +39,15 @@
     @include label-text(0.5625rem); // 9px
     color: $grey-400;
 
-    // hover 값은 시안 확인 전 임시 값
-    &:hover {
+    // hover 값은 시안 확인 전 임시 값. 비활성 버튼은 누를 수 없으므로 제외한다.
+    &:hover:not(:disabled) {
       color: $black;
+    }
+
+    // 상세 페이지에서 작품을 불러오지 못하면 detail.js가 비활성화한다.
+    &:disabled {
+      color: $grey-disabled;
+      cursor: default;
     }
 
     @include mq('tablet') {
