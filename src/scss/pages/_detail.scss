@@ -335,3 +335,57 @@
   height: auto;
   aspect-ratio: 1 / 1;
 }
+
+
+
+//--------------------------------------------
+// Modal
+//--------------------------------------------
+
+html:has(.c-dialog[open]) {
+  overflow: hidden;
+}
+
+.c-dialog {
+  --space: 24px;
+  width: max-content;
+  max-inline-size: min(327px, 100% - 2rem);
+  min-height: 315px;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  @include mq('tablet') {
+    max-inline-size: min(670px, 100% - 2rem);
+  }
+
+  @include mq('desktop') {
+    max-inline-size: min(917px, 100% - 2rem);
+  }
+}
+
+.c-dialog__close {
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-family: $font-primary;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2;
+  color: $bg-white;
+  padding-block: 2px;
+}
+
+.c-dialog__image {
+  display: block;
+  max-inline-size: 100%;
+  max-block-size: calc(100dvh - 6rem);
+  inline-size: auto;
+  block-size: auto;
+  object-fit: contain;
+}

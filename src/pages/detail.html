@@ -21,14 +21,14 @@
   </head>
   <body>
     <header class="c-header l-cluster">
-      <div class="c-header__logo">
+      <a class="c-header__logo" href="./index.html">
         <img
           src="./images/shared/logo.svg"
           width="113"
           height="32"
           alt="Galleria"
         />
-      </div>
+      </a>
       <button class="c-header__slideshow-button" type="button">
         STOP SLIDESHOW
       </button>
@@ -134,6 +134,12 @@
         </nav>
       </div>
     </footer>
+    <dialog class="c-dialog">
+      <div class="l-stack">
+        <button class="c-dialog__close" type="button">CLOSE</button>
+        <img class="c-dialog__image" alt="" />
+      </div>
+    </dialog>
     <script src="./js/detail.js" defer></script>
   </body>
 </html>

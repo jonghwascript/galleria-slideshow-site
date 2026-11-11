@@ -2,6 +2,10 @@ const detail = document.querySelector('.c-detail');
 const slideshowButton = document.querySelector('.c-header__slideshow-button');
 const previousButton = document.querySelector('.c-footer__link--previous');
 const nextButton = document.querySelector('.c-footer__link--next');
+const viewImageButton = document.querySelector('.c-detail__view');
+const imageDialog = document.querySelector('.c-dialog');
+const dialogImage = imageDialog.querySelector('.c-dialog__image');
+const closeDialogButton = imageDialog.querySelector('.c-dialog__close');
 let artworks = [];
 let currentIndex = 0;
 let slideshowTimer;
@@ -26,6 +30,9 @@ function renderArtwork(index, updateHistory = false) {
   source.srcset = artwork.images.hero.large;
   hero.src = artwork.images.hero.small;
   hero.alt = `${artwork.name} by ${artwork.artist.name}`;
+  dialogImage.src = artwork.images.gallery;
+  dialogImage.alt = hero.alt;
+  imageDialog.setAttribute('aria-label', `${artwork.name} image`);
   const title = detail.querySelector('.c-detail__name');
   title.replaceChildren(
     ...artwork.titleLines.flatMap((line, lineIndex) => {
@@ -144,6 +151,10 @@ slideshowButton.addEventListener('click', () => {
   if (slideshowTimer) stopSlideshow();
   else if (artworks.length) startSlideshow();
 });
+viewImageButton.addEventListener('click', () => {
+  if (artworks.length) imageDialog.showModal();
+});
+closeDialogButton.addEventListener('click', () => imageDialog.close());
 window.addEventListener('popstate', () => {
   if (slideshowTimer) stopSlideshow(false);
   const slug = new URLSearchParams(location.search).get('artwork');
