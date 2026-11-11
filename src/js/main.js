@@ -163,9 +163,7 @@ function initializeMasonry() {
       .sort((a, b) => a.row - b.row || a.column - b.column)
       .map(({ card }) => card);
     const currentCards = [...gallery.querySelectorAll('.c-artwork-card')];
-    if (
-      visualCards.some((card, index) => card !== currentCards[index])
-    ) {
+    if (visualCards.some((card, index) => card !== currentCards[index])) {
       const focusedElement = cards.find((card) =>
         card.contains(document.activeElement),
       )

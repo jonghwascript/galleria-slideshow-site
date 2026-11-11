@@ -11,10 +11,7 @@ const PRETTIER_GLOBS = [
   'src/js/**/*.js',
   'gulpfile.js',
 ];
-const STATIC_FILES = [
-  'src/*.json',
-  'src/{js,images,fonts}/**/*',
-];
+const STATIC_FILES = ['src/*.json', 'src/{js,images,fonts}/**/*'];
 
 async function cleanTask() {
   const { rm } = await import('node:fs/promises');
@@ -54,16 +51,16 @@ function dataTask() {
     .pipe(gulp.dest(DIST_DIR));
 }
 
+// 파일을 다 쓸 때까지 기다리고, 파싱 오류가 나면 태스크를 실패로 끝낸다.
+// (async 함수가 스트림을 반환하면 gulp는 쓰기가 끝나기 전에 완료로 처리한다.)
 async function prettierTask() {
+  const { pipeline } = await import('node:stream/promises');
   const { default: prettier } = await import('gulp-prettier');
-  return gulp
-    .src(PRETTIER_GLOBS, { base: '.' })
-    .pipe(prettier())
-    .on('error', function (error) {
-      console.error('[prettier]', error.message);
-      this.emit('end');
-    })
-    .pipe(gulp.dest('.'));
+  await pipeline(
+    gulp.src(PRETTIER_GLOBS, { base: '.' }),
+    prettier(),
+    gulp.dest('.'),
+  );
 }
 
 const buildTask = gulp.series(
