@@ -16,6 +16,7 @@
   padding-inline: $space-gutter;
 
   @include mq('tablet') {
+    // 시안에서 도출한 값이 아니라, 태블릿 구간의 확장 폭을 제한하기 위해 직접 정한 최대 너비.
     max-inline-size: 900px;
     margin-inline: auto;
     padding-inline: 40px; // (태블릿 화면 768px - 콘텐츠 688px) / 2
@@ -23,11 +24,12 @@
 
   @include mq('desktop') {
     display: grid;
-    // 시안 화면 1360px - 좌우 여백 40px × 2 = 콘텐츠 1280px.
-    // 작품 영역 848px / 콘텐츠 1280px × 100 = 66.25%.
+    // 시안은 화면 1440px, 콘텐츠 1360px, 작품 영역 848px(콘텐츠의 약 62.35%)이다.
+    // 현재 66.25%는 콘텐츠 1280px에서 최대 848px에 도달하는 비율이며, 시안 비율과는 다르다.
     grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
     grid-template-rows: auto;
     grid-template-areas: 'gallery additional';
+    // 데스크톱 시안: 설명 영역 시작 x=884px - 작품 영역 끝 x=848px = 36px.
     column-gap: 36px;
     // 태블릿에서 이어받은 패딩을 데스크톱 여백으로 맞추고, 패딩을 뺀 콘텐츠 폭이 헤더·갤러리와 같게 한다.
     max-inline-size: calc(#{$page-max-width} + 2 * #{$space-gutter-desktop});
@@ -48,6 +50,8 @@
   grid-template-rows: calc(232 / 327 * 100cqi) minmax(48px, auto) auto;
 
   @include mq('tablet') {
+    // 시안 콘텐츠 688px을 제목 시작 x=243px과 이미지 오른쪽 x=475px에서 나눈다.
+    // 각 열: 243px, 475 - 243 = 232px, 688 - 475 = 213px.
     grid-template-columns: 243px 232px 213px;
     grid-template-rows: repeat(3, auto);
   }
@@ -55,6 +59,7 @@
   @include mq('desktop') {
     grid-area: gallery;
     // 시안 너비(403px·72px·373px, 합계 848px)의 비율을 유지한 채 작품 영역 너비에 맞춰 줄어든다.
+    // 제목 시작 x=403px, 이미지 끝 x=475px 기준: 403, 475 - 403 = 72, 848 - 475 = 373.
     // 작품 영역이 최대 848px이므로 첫 열도 403px을 넘지 않는다.
     grid-template-columns: minmax(0, 403fr) minmax(0, 72fr) minmax(0, 373fr);
     // 행 높이도 시안(848px 너비에서 624px)의 비율로 줄어들어, 그림과 작가 사진의 위치 관계가 유지된다.
@@ -126,6 +131,7 @@
   grid-column: 1 / -1;
   grid-row: 2 / 3;
   align-self: start;
+  // 시안의 제목 상자 282px / 부모 327px ≈ 86.24%를 약 86%로 적용해, 부모가 넓어지면 함께 커진다.
   width: 86%;
   background-color: $white;
 
@@ -203,21 +209,25 @@
   margin-left: 16px;
 
   @include mq('tablet') {
+    // 시안 제목 상자 445px - 사진 시작 x=260px - 사진 너비 128px = 오른쪽 여백 57px.
     margin-right: 57px;
     margin-left: 0;
   }
 
   @include mq('desktop') {
     margin-right: 0;
+    // 데스크톱 시안: 제목 상자 안에서 작가 사진이 시작하는 x좌표가 96px이다.
     margin-left: 96px;
   }
 }
 
 .c-detail__additional {
   width: 100%;
+  // 모바일 시안: year 영역 시작 482px - 작품 영역 끝(24 + 81 + 392 = 497px) = -15px.
   margin-block-start: -15px;
 
   @include mq('tablet') {
+    // 태블릿 시안: 설명 영역 시작 y=721px - 작품 영역 끝 y=657px = 64px(같은 부모 기준).
     margin-block-start: 64px;
   }
 
@@ -258,6 +268,7 @@
   --space: 64px;
   position: relative;
   z-index: 10;
+  // 모바일 시안: 본문 시작은 year 상단에서 64px 아래이므로, year 높이 100px - 36px = 64px.
   margin-block-start: -36px;
 
   @include mq('tablet') {
@@ -268,6 +279,7 @@
   @include mq('desktop') {
     --space: 96px;
     max-inline-size: 350px;
+    // 데스크톱에서 본문을 위로 당겨 year와 겹치게 하도록 정한 값.
     margin-block-start: -110px;
     margin-inline: 0;
   }
@@ -296,9 +308,11 @@
 // ------------------------------------------
 
 .c-footer {
+  // 모바일 시안: 푸터 시작 y=1066px - 설명 영역 끝(482 + 507 = 989px) = 77px.
   margin-block-start: 77px;
 
   @include mq('tablet') {
+    // 태블릿 시안: 푸터 시작 y=433px - 본문 영역 끝 y=377px = 56px(같은 부모 기준).
     margin-block-start: 56px;
   }
 }
@@ -410,8 +424,10 @@ html:has(.c-dialog[open]) {
 // 제한: 내용 너비를 따르되 화면 여백을 남기며, 최소 높이는 315px이다.
 // 전환: 최대 너비는 모바일 327px·태블릿 670px·데스크톱 917px이다.
 .c-dialog {
+  // 모바일 시안: 이미지 시작 y=52px - 닫기 텍스트 높이 28px = 간격 24px.
   --space: 24px;
   width: max-content;
+  // 모바일 시안: 닫기 텍스트 28px + 간격 24px + 이미지 263px = 전체 높이 315px.
   min-height: 315px;
   max-inline-size: min(327px, 100% - 2rem);
   margin: auto;
