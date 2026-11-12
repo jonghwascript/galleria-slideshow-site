@@ -27,7 +27,9 @@
     grid-template-rows: auto;
     grid-template-areas: 'gallery additional';
     column-gap: 36px;
-    max-inline-size: $page-max-width;
+    // 태블릿에서 이어받은 패딩을 데스크톱 여백으로 맞추고, 패딩을 뺀 콘텐츠 폭이 헤더·갤러리와 같게 한다.
+    max-inline-size: calc(#{$page-max-width} + 2 * #{$space-gutter-desktop});
+    padding-inline: $space-gutter-desktop;
   }
 }
 

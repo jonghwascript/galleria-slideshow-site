@@ -18,8 +18,10 @@
   margin-inline: auto;
   padding-inline: $space-gutter;
 
+  // 패딩을 뺀 콘텐츠 폭이 갤러리·상세 페이지와 같은 $page-max-width가 되도록 최대 너비에 패딩을 더한다.
   @include mq('desktop') {
-    padding-inline: 40px;
+    max-inline-size: calc(#{$page-max-width} + 2 * #{$space-gutter-desktop});
+    padding-inline: $space-gutter-desktop;
   }
 
   &::after {
