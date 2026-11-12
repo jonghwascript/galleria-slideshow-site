@@ -18,6 +18,10 @@
   margin-inline: auto;
   padding-inline: $space-gutter;
 
+  @include mq('desktop') {
+    padding-inline: 40px;
+  }
+
   &::after {
     content: '';
     display: block;
@@ -26,6 +30,11 @@
     margin-block-start: 24px;
     margin-inline: calc(-1 * #{$space-gutter});
     background-color: $grey-150;
+
+    @include mq('desktop') {
+      width: calc(100% + 2 * 40px);
+      margin-inline: 0;
+    }
   }
 
   &__logo {
