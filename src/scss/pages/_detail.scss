@@ -8,6 +8,8 @@
 // 제한: 데스크톱 최대 너비는 $page-max-width, 작품 열은 최대 848px이며 첫 행은 624px이다.
 // 전환: 태블릿부터 좌우 패딩과 최대 너비가 바뀌고, 데스크톱부터 두 열 Grid가 된다.
 .c-detail {
+  // 모바일 overview의 첫 행 높이가 콘텐츠 너비(cqi)를 따르도록 기준 컨테이너가 된다.
+  container-type: inline-size;
   inline-size: 100%;
   margin-block-start: 24px;
   padding-inline: $space-gutter;
@@ -30,13 +32,16 @@
 }
 
 // 관계: 이미지·제목 설명·작가 사진이 모바일에서 Grid 행을 나눠 쓰며 일부 행은 겹친다.
-// 제한: 모바일 첫 행은 232px, 둘째 행은 최소 48px이고 뒤 행은 내용에 맞춰 늘어난다.
+// 제한: 모바일 첫 행은 콘텐츠 너비에 비례하고(375px 시안의 327px 너비에서 232px),
+//       둘째 행은 최소 48px이며 뒤 행은 내용에 맞춰 늘어난다.
 // 전환: 태블릿부터 세 열, 데스크톱부터 작품 영역의 고정 열 너비를 사용한다.
 .c-detail__overview {
   container-type: inline-size;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 232px minmax(48px, auto) auto;
+  // 이미지 높이도 너비에 비례하므로, 설명 상자가 겹치는 비율이 화면 너비와 관계없이 같다.
+  // cqi는 자기 자신이 아닌 조상 컨테이너(.c-detail)의 콘텐츠 너비를 기준으로 한다.
+  grid-template-rows: calc(232 / 327 * 100cqi) minmax(48px, auto) auto;
 
   @include mq('tablet') {
     grid-template-columns: 243px 232px 213px;
