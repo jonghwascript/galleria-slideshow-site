@@ -5,7 +5,8 @@
 // ------------------------------------------
 
 // 관계: 데스크톱에서는 작품 영역과 설명 영역을 두 열에 놓고, 그 전에는 문서 흐름대로 쌓는다.
-// 제한: 데스크톱 최대 너비는 $page-max-width, 작품 열은 최대 848px이며 첫 행은 624px이다.
+// 제한: 데스크톱 최대 너비는 $page-max-width, 작품 열은 최대 848px이다.
+//       행 높이는 작품 영역(overview)과 오른쪽 본문 중 높은 쪽을 따른다.
 // 전환: 태블릿부터 좌우 패딩과 최대 너비가 바뀌고, 데스크톱부터 두 열 Grid가 된다.
 .c-detail {
   // 모바일 overview의 첫 행 높이가 콘텐츠 너비(cqi)를 따르도록 기준 컨테이너가 된다.
@@ -23,7 +24,7 @@
   @include mq('desktop') {
     display: grid;
     grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
-    grid-template-rows: 624px;
+    grid-template-rows: auto;
     grid-template-areas: 'gallery additional';
     column-gap: 36px;
     max-inline-size: $page-max-width;
@@ -33,7 +34,7 @@
 // 관계: 이미지·제목 설명·작가 사진이 모바일에서 Grid 행을 나눠 쓰며 일부 행은 겹친다.
 // 제한: 모바일 첫 행은 콘텐츠 너비에 비례하고(375px 시안의 327px 너비에서 232px),
 //       둘째 행은 최소 48px이며 뒤 행은 내용에 맞춰 늘어난다.
-// 전환: 태블릿부터 세 열, 데스크톱부터 작품 영역의 고정 열 너비를 사용한다.
+// 전환: 태블릿부터 세 열, 데스크톱부터 작품 영역 너비에 비례하는 세 열을 사용한다.
 .c-detail__overview {
   container-type: inline-size;
   display: grid;
@@ -49,8 +50,12 @@
 
   @include mq('desktop') {
     grid-area: gallery;
-    grid-template-columns: 403px 72px 373px;
-    grid-template-rows: auto;
+    // 시안 너비(403px·72px·373px, 합계 848px)의 비율을 유지한 채 작품 영역 너비에 맞춰 줄어든다.
+    // 작품 영역이 최대 848px이므로 첫 열도 403px을 넘지 않는다.
+    grid-template-columns: minmax(0, 403fr) minmax(0, 72fr) minmax(0, 373fr);
+    // 행 높이도 시안(848px 너비에서 624px)의 비율로 줄어들어, 그림과 작가 사진의 위치 관계가 유지된다.
+    // 작품 영역 = .c-detail 콘텐츠 너비(100cqi)의 66.25%이므로 624 / 848 × 66.25cqi = 48.75cqi.
+    grid-template-rows: min(48.75cqi, 624px);
   }
 }
 
@@ -145,6 +150,12 @@
     700,
     1.25
   ); // 24px ~ 56px
+
+  // 데스크톱에서는 작품 영역(overview, 최대 848px) 너비에 비례해, 848px에서 56px이 된다.
+  // 열이 좁아져도 Magdalene처럼 긴 단어가 제목 상자를 넘지 않게 한다.
+  @include mq('desktop') {
+    font-size: min(3.5rem, calc(56 / 848 * 100cqi));
+  }
 }
 
 // 태블릿부터 제목을 data.json의 titleLines 단위로 줄바꿈한다.
