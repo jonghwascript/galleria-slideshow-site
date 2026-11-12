@@ -107,11 +107,12 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto;
+  grid-template-areas: 'content';
 
   &::before {
     content: '';
     z-index: 1;
-    grid-area: 1 / 1 / -1 / -1;
+    grid-area: content;
     background: linear-gradient(0deg, $black 0%, transparent 84%);
     pointer-events: none;
   }
@@ -123,7 +124,7 @@
 
   &__thumbnail,
   &__info {
-    grid-area: 1 / 1 / -1 / -1;
+    grid-area: content;
   }
 
   &__thumbnail {
