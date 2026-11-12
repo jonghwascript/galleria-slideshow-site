@@ -18,11 +18,13 @@
   @include mq('tablet') {
     max-inline-size: 900px;
     margin-inline: auto;
-    padding-inline: 40px;
+    padding-inline: 40px; // (태블릿 화면 768px - 콘텐츠 688px) / 2
   }
 
   @include mq('desktop') {
     display: grid;
+    // 시안 화면 1360px - 좌우 여백 40px × 2 = 콘텐츠 1280px.
+    // 작품 영역 848px / 콘텐츠 1280px × 100 = 66.25%.
     grid-template-columns: minmax(0, min(66.25%, 848px)) minmax(0, 1fr);
     grid-template-rows: auto;
     grid-template-areas: 'gallery additional';

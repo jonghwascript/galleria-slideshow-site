@@ -34,7 +34,7 @@
     background-color: $grey-150;
 
     @include mq('desktop') {
-      width: calc(100% + 2 * 40px);
+      width: calc(100% + 2 * #{$space-gutter-desktop});
       margin-inline: 0;
     }
   }
